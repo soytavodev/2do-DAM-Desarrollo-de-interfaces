@@ -1,71 +1,64 @@
 <!DOCTYPE html>
-<html lang="es">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width,initial-scale=1" name="viewport"/>
-  <title>
-   jocarsa | login
-  </title>
-  <link href="css/estilo.css" rel="stylesheet"/>
- </head>
- <body class="ju-login-page">
-  <main class="ju-login-layout">
-   <article class="ju-login-side">
-    <div class="ju-login-brand">
-     <img alt="" src="https://static.jocarsa.com/logos/white.svg"/>
-     <h1 class="ju-login-product-title">
-      jocarsa | interfaz integrada
-     </h1>
-     <p>
-      Accede a tu espacio de trabajo.
-     </p>
-    </div>
-   </article>
-   <article class="ju-login-card">
-    <h2>
-     Iniciar sesión
-    </h2>
-    <p>
-     Introduce tus credenciales.
-    </p>
-    <form action="index.html" class="ju-form-grid">
-     <label class="ju-form-full">
-      <span>
-       Email
-      </span>
-      <input placeholder="nombre@ejemplo.com" required="" type="email"/>
-     </label>
-     <label class="ju-form-full">
-      <span>
-       Contraseña
-      </span>
-      <input placeholder="••••••••" required="" type="password"/>
-     </label>
-     <label class="ju-check ju-form-full">
-      <input type="checkbox"/>
-      <span>
-       Mantener la sesión iniciada
-      </span>
-     </label>
-     <div class="ju-form-full ju-login-actions">
-      <button class="ju-btn" type="submit">
-       Entrar
-      </button>
-      <a class="ju-text-link" href="#">
-       ¿Olvidaste la contraseña?
+<html lang="es" data-tema="oscuro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acceso · intUIción</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/intuicion.css">
+</head>
+<body>
+  <div class="iu-login">
+    <aside class="iu-login-lado">
+      <a class="iu-marca" href="login.html">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="var(--acento)"/>
+          <path d="M7 22 16 7l9 15-9-4z" fill="#fff"/>
+        </svg>
+        <strong>int<b>UI</b>ción</strong>
       </a>
-     </div>
-    </form>
-    <div class="ju-button-row">
-     <a class="ju-btn secondary" href="formularios.html">
-      Formularios
-     </a>
-     <a class="ju-btn secondary" href="toasts.html">
-      Toasts
-     </a>
-    </div>
-   </article>
-  </main>
- </body>
-</html>
 
+      <div>
+        <h1>La interfaz que<br>ya sabe <b>qué buscas</b>.</h1>
+        <p>Gestión de pedidos, aeronaves y componentes de REDKYBER con atajos, búsqueda instantánea y avisos que llegan antes que el error.</p>
+      </div>
+
+      <small class="iu-tenue">Proyecto de Desarrollo de interfaces · 2º DAM · CEAC</small>
+    </aside>
+
+    <main class="iu-login-panel">
+      <div class="iu-login-tarjeta">
+        <h2>Iniciar sesión</h2>
+        <p>Entra con tu cuenta de REDKYBER.</p>
+
+        <form class="iu-form" id="formLogin" novalidate>
+          <label class="iu-control" for="email">
+            <span>Email<span class="iu-requerido" aria-hidden="true">*</span></span>
+            <input id="email" name="email" type="email" autocomplete="username" placeholder="nombre@redkyber.aero" required aria-describedby="emailAyuda">
+            <small class="iu-ayuda" id="emailAyuda"></small>
+          </label>
+
+          <label class="iu-control" for="clave">
+            <span>Contraseña<span class="iu-requerido" aria-hidden="true">*</span></span>
+            <div class="iu-clave">
+              <input id="clave" name="clave" type="password" autocomplete="current-password" placeholder="Mínimo 6 caracteres" required aria-describedby="claveAyuda">
+              <button type="button" id="verClave" aria-pressed="false">Mostrar</button>
+            </div>
+            <small class="iu-ayuda" id="claveAyuda"></small>
+          </label>
+
+          <label class="iu-interruptor">
+            <input type="checkbox" id="recordar" checked>
+            <span>Recordar mi email en este equipo</span>
+          </label>
+
+          <button class="iu-btn" type="submit">Entrar <kbd class="iu-kbd">↵</kbd></button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/intuicion.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
