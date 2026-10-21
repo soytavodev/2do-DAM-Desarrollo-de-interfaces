@@ -1,0 +1,156 @@
+{
+  "entidad": "empleados",
+  "titulo": "Empleados",
+  "descripcion": "Plantilla de REDKYBER por departamento.",
+  "icono": "☺",
+  "columnas": [
+    {
+      "campo": "nombre",
+      "etiqueta": "Nombre"
+    },
+    {
+      "campo": "apellidos",
+      "etiqueta": "Apellidos"
+    },
+    {
+      "campo": "departamento",
+      "etiqueta": "Departamento",
+      "formato": "etiqueta"
+    },
+    {
+      "campo": "puesto",
+      "etiqueta": "Puesto"
+    },
+    {
+      "campo": "salario",
+      "etiqueta": "Salario",
+      "formato": "moneda",
+      "sumar": true
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "nombre",
+      "etiqueta": "Nombre",
+      "tipo": "text",
+      "requerido": true,
+      "min": 2
+    },
+    {
+      "nombre": "apellidos",
+      "etiqueta": "Apellidos",
+      "tipo": "text",
+      "requerido": true
+    },
+    {
+      "nombre": "departamento",
+      "etiqueta": "Departamento",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Ingeniería",
+        "Producción",
+        "Calidad",
+        "Informática",
+        "Ventas",
+        "Logística",
+        "Administración",
+        "I+D"
+      ]
+    },
+    {
+      "nombre": "puesto",
+      "etiqueta": "Puesto",
+      "tipo": "text"
+    },
+    {
+      "nombre": "salario",
+      "etiqueta": "Salario anual (€)",
+      "tipo": "number",
+      "minimo": 15876,
+      "ayuda": "No puede ser inferior al SMI anual"
+    }
+  ],
+  "registros": [
+    {
+      "nombre": "Ana",
+      "apellidos": "Martínez",
+      "departamento": "Ingeniería",
+      "puesto": "Ingeniera aeronáutica",
+      "salario": 52000.0,
+      "identificador": 1
+    },
+    {
+      "nombre": "Carlos",
+      "apellidos": "García",
+      "departamento": "Ingeniería",
+      "puesto": "Ingeniero de motores",
+      "salario": 55000.0,
+      "identificador": 2
+    },
+    {
+      "nombre": "Laura",
+      "apellidos": "Sánchez",
+      "departamento": "Producción",
+      "puesto": "Jefa de producción",
+      "salario": 62000.0,
+      "identificador": 3
+    },
+    {
+      "nombre": "Miguel",
+      "apellidos": "Torres",
+      "departamento": "Producción",
+      "puesto": "Técnico de montaje",
+      "salario": 34000.0,
+      "identificador": 4
+    },
+    {
+      "nombre": "Sofía",
+      "apellidos": "Navarro",
+      "departamento": "Calidad",
+      "puesto": "Inspectora de calidad",
+      "salario": 41000.0,
+      "identificador": 5
+    },
+    {
+      "nombre": "David",
+      "apellidos": "Romero",
+      "departamento": "Informática",
+      "puesto": "Desarrollador de software",
+      "salario": 48000.0,
+      "identificador": 6
+    },
+    {
+      "nombre": "Elena",
+      "apellidos": "Ruiz",
+      "departamento": "Ventas",
+      "puesto": "Directora comercial",
+      "salario": 65000.0,
+      "identificador": 7
+    },
+    {
+      "nombre": "Javier",
+      "apellidos": "Moreno",
+      "departamento": "Logística",
+      "puesto": "Responsable de logística",
+      "salario": 46000.0,
+      "identificador": 8
+    },
+    {
+      "nombre": "Marta",
+      "apellidos": "Vidal",
+      "departamento": "Administración",
+      "puesto": "Contable",
+      "salario": 38000.0,
+      "identificador": 9
+    },
+    {
+      "nombre": "Pablo",
+      "apellidos": "Ortega",
+      "departamento": "I+D",
+      "puesto": "Investigador",
+      "salario": 57000.0,
+      "identificador": 10
+    }
+  ]
+}

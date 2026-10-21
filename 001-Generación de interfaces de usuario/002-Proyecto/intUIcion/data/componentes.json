@@ -1,0 +1,150 @@
+{
+  "entidad": "componentes",
+  "titulo": "Componentes",
+  "descripcion": "Piezas en almacén. Por debajo de 50 unidades se marcan en ámbar.",
+  "icono": "⚙",
+  "columnas": [
+    {
+      "campo": "nombre",
+      "etiqueta": "Componente"
+    },
+    {
+      "campo": "tipo",
+      "etiqueta": "Tipo",
+      "formato": "etiqueta"
+    },
+    {
+      "campo": "proveedor_id",
+      "etiqueta": "Proveedor",
+      "formato": "referencia"
+    },
+    {
+      "campo": "stock",
+      "etiqueta": "Stock",
+      "formato": "stock",
+      "sumar": true
+    },
+    {
+      "campo": "precio",
+      "etiqueta": "Precio unidad",
+      "formato": "moneda"
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "nombre",
+      "etiqueta": "Componente",
+      "tipo": "text",
+      "requerido": true,
+      "min": 3
+    },
+    {
+      "nombre": "tipo",
+      "etiqueta": "Tipo",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Motor",
+        "Estructura",
+        "Aviónica",
+        "Mecánica",
+        "Interior"
+      ]
+    },
+    {
+      "nombre": "proveedor_id",
+      "etiqueta": "Proveedor",
+      "tipo": "referencia",
+      "entidad": "proveedores",
+      "mostrar": "nombre",
+      "requerido": true
+    },
+    {
+      "nombre": "stock",
+      "etiqueta": "Stock",
+      "tipo": "number",
+      "requerido": true,
+      "minimo": 0
+    },
+    {
+      "nombre": "precio",
+      "etiqueta": "Precio unidad (€)",
+      "tipo": "number",
+      "minimo": 0
+    }
+  ],
+  "registros": [
+    {
+      "nombre": "Motor AX-900",
+      "tipo": "Motor",
+      "proveedor_id": 1,
+      "precio": 12500000.0,
+      "stock": 24,
+      "identificador": 1
+    },
+    {
+      "nombre": "Motor AX-1200",
+      "tipo": "Motor",
+      "proveedor_id": 1,
+      "precio": 18500000.0,
+      "stock": 16,
+      "identificador": 2
+    },
+    {
+      "nombre": "Panel fibra carbono",
+      "tipo": "Estructura",
+      "proveedor_id": 2,
+      "precio": 85000.0,
+      "stock": 450,
+      "identificador": 3
+    },
+    {
+      "nombre": "Sistema navegación NAV-X",
+      "tipo": "Aviónica",
+      "proveedor_id": 3,
+      "precio": 450000.0,
+      "stock": 80,
+      "identificador": 4
+    },
+    {
+      "nombre": "Radar WX-500",
+      "tipo": "Aviónica",
+      "proveedor_id": 3,
+      "precio": 320000.0,
+      "stock": 60,
+      "identificador": 5
+    },
+    {
+      "nombre": "Tren aterrizaje LG-200",
+      "tipo": "Mecánica",
+      "proveedor_id": 4,
+      "precio": 780000.0,
+      "stock": 35,
+      "identificador": 6
+    },
+    {
+      "nombre": "Asiento Business Premium",
+      "tipo": "Interior",
+      "proveedor_id": 5,
+      "precio": 8500.0,
+      "stock": 900,
+      "identificador": 7
+    },
+    {
+      "nombre": "Asiento Economy Light",
+      "tipo": "Interior",
+      "proveedor_id": 5,
+      "precio": 2100.0,
+      "stock": 4500,
+      "identificador": 8
+    },
+    {
+      "nombre": "Panel aluminio AL-700",
+      "tipo": "Estructura",
+      "proveedor_id": 6,
+      "precio": 32000.0,
+      "stock": 1200,
+      "identificador": 9
+    }
+  ]
+}

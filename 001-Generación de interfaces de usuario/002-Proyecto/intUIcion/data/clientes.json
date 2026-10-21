@@ -1,47 +1,135 @@
 {
-  "titulo": "Listado de clientes",
+  "entidad": "clientes",
+  "titulo": "Aerolíneas cliente",
+  "descripcion": "Compañías que compran aeronaves a REDKYBER.",
+  "icono": "✈",
   "columnas": [
     {
-      "campo": "id",
-      "etiqueta": "ID"
-    },
-    {
       "campo": "nombre",
-      "etiqueta": "Nombre"
+      "etiqueta": "Aerolínea"
     },
     {
-      "campo": "apellidos",
-      "etiqueta": "Apellidos"
-    },
-    {
-      "campo": "email",
-      "etiqueta": "Email"
+      "campo": "pais",
+      "etiqueta": "País"
     },
     {
       "campo": "telefono",
-      "etiqueta": "Teléfono"
+      "etiqueta": "Teléfono",
+      "formato": "mono"
     },
     {
-      "campo": "empresa",
-      "etiqueta": "Empresa"
+      "campo": "email",
+      "etiqueta": "Email",
+      "formato": "email"
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "nombre",
+      "etiqueta": "Aerolínea",
+      "tipo": "text",
+      "requerido": true,
+      "min": 2
+    },
+    {
+      "nombre": "pais",
+      "etiqueta": "País",
+      "tipo": "text",
+      "requerido": true,
+      "sugerencias": [
+        "España",
+        "Alemania",
+        "Francia",
+        "Reino Unido",
+        "Estados Unidos",
+        "Japón",
+        "Canadá"
+      ]
+    },
+    {
+      "nombre": "telefono",
+      "etiqueta": "Teléfono",
+      "tipo": "tel",
+      "patron": "^[0-9 +]{9,15}$",
+      "ayuda": "Solo números, de 9 a 15 cifras"
+    },
+    {
+      "nombre": "email",
+      "etiqueta": "Email de compras",
+      "tipo": "email",
+      "requerido": true
     }
   ],
   "registros": [
     {
-      "id": 1,
-      "nombre": "Laura",
-      "apellidos": "Martínez García",
-      "email": "laura.martinez@example.com",
-      "telefono": "+34 612 345 678",
-      "empresa": "Soluciones Levante S.L."
+      "nombre": "Iberia",
+      "pais": "España",
+      "telefono": "915874100",
+      "email": "compras@iberia.es",
+      "identificador": 1
     },
     {
-      "id": 2,
-      "nombre": "Carlos",
-      "apellidos": "Navarro Pérez",
-      "email": "carlos.navarro@example.com",
-      "telefono": "+34 623 456 789",
-      "empresa": "Innovación Digital S.A."
+      "nombre": "Lufthansa",
+      "pais": "Alemania",
+      "telefono": "496986799",
+      "email": "procurement@lufthansa.de",
+      "identificador": 2
+    },
+    {
+      "nombre": "Air France",
+      "pais": "Francia",
+      "telefono": "331415656",
+      "email": "compras@airfrance.fr",
+      "identificador": 3
+    },
+    {
+      "nombre": "Emirates",
+      "pais": "Emiratos Árabes Unidos",
+      "telefono": "97147081111",
+      "email": "purchasing@emirates.ae",
+      "identificador": 4
+    },
+    {
+      "nombre": "Japan Airlines",
+      "pais": "Japón",
+      "telefono": "81354603111",
+      "email": "orders@jal.jp",
+      "identificador": 5
+    },
+    {
+      "nombre": "Air Canada",
+      "pais": "Canadá",
+      "telefono": "15143943333",
+      "email": "procurement@aircanada.ca",
+      "identificador": 6
+    },
+    {
+      "nombre": "Qatar Airways",
+      "pais": "Catar",
+      "telefono": "97441445555",
+      "email": "orders@qatarairways.qa",
+      "identificador": 7
+    },
+    {
+      "nombre": "Singapore Airlines",
+      "pais": "Singapur",
+      "telefono": "6565415314",
+      "email": "purchasing@singaporeair.sg",
+      "identificador": 8
+    },
+    {
+      "nombre": "Delta Airlines",
+      "pais": "Estados Unidos",
+      "telefono": "14047152600",
+      "email": "procurement@delta.com",
+      "identificador": 9
+    },
+    {
+      "nombre": "British Airways",
+      "pais": "Reino Unido",
+      "telefono": "442087385050",
+      "email": "orders@ba.com",
+      "identificador": 10
     }
   ]
 }

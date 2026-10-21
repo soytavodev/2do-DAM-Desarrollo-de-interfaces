@@ -1,0 +1,96 @@
+{
+  "entidad": "proveedores",
+  "titulo": "Proveedores",
+  "descripcion": "Empresas que suministran componentes.",
+  "icono": "⛟",
+  "columnas": [
+    {
+      "campo": "nombre",
+      "etiqueta": "Proveedor"
+    },
+    {
+      "campo": "pais",
+      "etiqueta": "País"
+    },
+    {
+      "campo": "especialidad",
+      "etiqueta": "Especialidad",
+      "formato": "etiqueta"
+    },
+    {
+      "campo": "email",
+      "etiqueta": "Email",
+      "formato": "email"
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "nombre",
+      "etiqueta": "Proveedor",
+      "tipo": "text",
+      "requerido": true,
+      "min": 2
+    },
+    {
+      "nombre": "pais",
+      "etiqueta": "País",
+      "tipo": "text",
+      "requerido": true
+    },
+    {
+      "nombre": "especialidad",
+      "etiqueta": "Especialidad",
+      "tipo": "text"
+    },
+    {
+      "nombre": "email",
+      "etiqueta": "Email",
+      "tipo": "email",
+      "requerido": true
+    }
+  ],
+  "registros": [
+    {
+      "nombre": "AeroEngines Europe",
+      "pais": "Reino Unido",
+      "especialidad": "Motores",
+      "email": "ventas@aeroengines.com",
+      "identificador": 1
+    },
+    {
+      "nombre": "CompositeTech",
+      "pais": "España",
+      "especialidad": "Materiales compuestos",
+      "email": "ventas@compositetech.es",
+      "identificador": 2
+    },
+    {
+      "nombre": "Avionics Systems",
+      "pais": "Estados Unidos",
+      "especialidad": "Aviónica",
+      "email": "sales@avionics.com",
+      "identificador": 3
+    },
+    {
+      "nombre": "Landing Solutions",
+      "pais": "Francia",
+      "especialidad": "Trenes de aterrizaje",
+      "email": "sales@landing.fr",
+      "identificador": 4
+    },
+    {
+      "nombre": "Cabin Design",
+      "pais": "Italia",
+      "especialidad": "Interiores",
+      "email": "info@cabindesign.it",
+      "identificador": 5
+    },
+    {
+      "nombre": "AeroMetal",
+      "pais": "Alemania",
+      "especialidad": "Aluminio aeronáutico",
+      "email": "sales@aerometal.de",
+      "identificador": 6
+    }
+  ]
+}

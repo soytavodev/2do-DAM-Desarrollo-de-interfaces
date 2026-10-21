@@ -1,123 +1,138 @@
 {
+  "entidad": "productos",
+  "titulo": "Aeronaves",
+  "descripcion": "Catálogo de modelos que fabrica REDKYBER.",
+  "icono": "◭",
+  "columnas": [
+    {
+      "campo": "nombre",
+      "etiqueta": "Modelo"
+    },
+    {
+      "campo": "tipo",
+      "etiqueta": "Tipo",
+      "formato": "etiqueta"
+    },
+    {
+      "campo": "capacidad",
+      "etiqueta": "Plazas",
+      "formato": "numero"
+    },
+    {
+      "campo": "autonomia",
+      "etiqueta": "Autonomía (km)",
+      "formato": "numero"
+    },
+    {
+      "campo": "precio",
+      "etiqueta": "Precio",
+      "formato": "moneda"
+    }
+  ],
   "campos": [
     {
-      "nombre": "id",
-      "etiqueta": "ID",
-      "tipo": "number"
-    },
-    {
       "nombre": "nombre",
-      "etiqueta": "Nombre del producto",
-      "tipo": "text"
+      "etiqueta": "Modelo",
+      "tipo": "text",
+      "requerido": true,
+      "min": 3
     },
     {
-      "nombre": "descripcion",
-      "etiqueta": "Descripción",
-      "tipo": "textarea"
-    },
-    {
-      "nombre": "categoria",
-      "etiqueta": "Categoría",
+      "nombre": "tipo",
+      "etiqueta": "Tipo",
       "tipo": "select",
+      "requerido": true,
       "opciones": [
-        "Informática",
-        "Periféricos",
-        "Telefonía",
-        "Oficina",
-        "Almacenamiento"
+        "Regional",
+        "Medio alcance",
+        "Largo alcance",
+        "Carga"
       ]
     },
     {
+      "nombre": "capacidad",
+      "etiqueta": "Plazas",
+      "tipo": "number",
+      "minimo": 0
+    },
+    {
+      "nombre": "autonomia",
+      "etiqueta": "Autonomía (km)",
+      "tipo": "number",
+      "minimo": 500
+    },
+    {
       "nombre": "precio",
-      "etiqueta": "Precio",
-      "tipo": "number"
-    },
-    {
-      "nombre": "stock",
-      "etiqueta": "Stock",
-      "tipo": "number"
-    },
-    {
-      "nombre": "fecha_alta",
-      "etiqueta": "Fecha de alta",
-      "tipo": "date"
-    },
-    {
-      "nombre": "fabricante",
-      "etiqueta": "Fabricante",
-      "tipo": "text"
-    },
-    {
-      "nombre": "web",
-      "etiqueta": "Página del producto",
-      "tipo": "url"
-    },
-    {
-      "nombre": "disponible",
-      "etiqueta": "Disponible",
-      "tipo": "checkbox"
+      "etiqueta": "Precio (€)",
+      "tipo": "number",
+      "requerido": true,
+      "minimo": 0
     }
   ],
-  "datos": [
+  "registros": [
     {
-      "id": 1,
-      "nombre": "Portátil ProBook 15",
-      "descripcion": "Portátil profesional de 15 pulgadas para oficina y desarrollo.",
-      "categoria": "Informática",
-      "precio": 749.99,
-      "stock": 12,
-      "fecha_alta": "2026-01-15",
-      "fabricante": "TechNova",
-      "web": "https://example.com/probook15",
-      "disponible": true
+      "nombre": "Aquila 100",
+      "tipo": "Regional",
+      "precio": 89000000.0,
+      "capacidad": 90,
+      "autonomia": 3500,
+      "identificador": 1
     },
     {
-      "id": 2,
-      "nombre": "Monitor UltraView 27",
-      "descripcion": "Monitor IPS de 27 pulgadas con resolución 2560x1440.",
-      "categoria": "Informática",
-      "precio": 229.9,
-      "stock": 25,
-      "fecha_alta": "2026-02-03",
-      "fabricante": "UltraView",
-      "web": "https://example.com/ultraview27",
-      "disponible": true
+      "nombre": "Aquila 200",
+      "tipo": "Medio alcance",
+      "precio": 125000000.0,
+      "capacidad": 160,
+      "autonomia": 6200,
+      "identificador": 2
     },
     {
-      "id": 3,
-      "nombre": "Teclado Mecánico K500",
-      "descripcion": "Teclado mecánico USB para programación y uso intensivo.",
-      "categoria": "Periféricos",
-      "precio": 79.95,
-      "stock": 40,
-      "fecha_alta": "2026-02-20",
-      "fabricante": "KeyMaster",
-      "web": "https://example.com/k500",
-      "disponible": true
+      "nombre": "Aquila 300",
+      "tipo": "Medio alcance",
+      "precio": 148000000.0,
+      "capacidad": 190,
+      "autonomia": 7500,
+      "identificador": 3
     },
     {
-      "id": 4,
-      "nombre": "SSD Portable 2 TB",
-      "descripcion": "Unidad SSD externa USB-C de alta velocidad.",
-      "categoria": "Almacenamiento",
-      "precio": 149.5,
-      "stock": 18,
-      "fecha_alta": "2026-03-12",
-      "fabricante": "DataFast",
-      "web": "https://example.com/ssd2tb",
-      "disponible": true
+      "nombre": "Condor 400",
+      "tipo": "Largo alcance",
+      "precio": 245000000.0,
+      "capacidad": 280,
+      "autonomia": 12000,
+      "identificador": 4
     },
     {
-      "id": 5,
-      "nombre": "Smartphone Nova X",
-      "descripcion": "Teléfono móvil con pantalla OLED y 256 GB de almacenamiento.",
-      "categoria": "Telefonía",
-      "precio": 499.0,
-      "stock": 0,
-      "fecha_alta": "2026-04-08",
-      "fabricante": "NovaMobile",
-      "web": "https://example.com/novax",
-      "disponible": false
+      "nombre": "Condor 500",
+      "tipo": "Largo alcance",
+      "precio": 295000000.0,
+      "capacidad": 340,
+      "autonomia": 14500,
+      "identificador": 5
+    },
+    {
+      "nombre": "Condor 600",
+      "tipo": "Largo alcance",
+      "precio": 340000000.0,
+      "capacidad": 410,
+      "autonomia": 15500,
+      "identificador": 6
+    },
+    {
+      "nombre": "Falcon Cargo 200",
+      "tipo": "Carga",
+      "precio": 175000000.0,
+      "capacidad": 2,
+      "autonomia": 8500,
+      "identificador": 7
+    },
+    {
+      "nombre": "Falcon Cargo 400",
+      "tipo": "Carga",
+      "precio": 260000000.0,
+      "capacidad": 2,
+      "autonomia": 12500,
+      "identificador": 8
     }
   ]
 }

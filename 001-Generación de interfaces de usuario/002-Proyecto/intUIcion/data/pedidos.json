@@ -1,0 +1,169 @@
+{
+  "entidad": "pedidos",
+  "titulo": "Pedidos",
+  "descripcion": "Pedidos de aeronaves y su estado de fabricación.",
+  "icono": "▤",
+  "columnas": [
+    {
+      "campo": "identificador",
+      "etiqueta": "Nº",
+      "formato": "mono"
+    },
+    {
+      "campo": "fecha",
+      "etiqueta": "Fecha",
+      "formato": "fecha"
+    },
+    {
+      "campo": "cliente_id",
+      "etiqueta": "Cliente",
+      "formato": "referencia"
+    },
+    {
+      "campo": "estado",
+      "etiqueta": "Estado",
+      "formato": "estado"
+    },
+    {
+      "campo": "total",
+      "etiqueta": "Total",
+      "formato": "moneda",
+      "sumar": true
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "fecha",
+      "etiqueta": "Fecha",
+      "tipo": "date",
+      "requerido": true
+    },
+    {
+      "nombre": "cliente_id",
+      "etiqueta": "Cliente",
+      "tipo": "referencia",
+      "entidad": "clientes",
+      "mostrar": "nombre",
+      "requerido": true
+    },
+    {
+      "nombre": "estado",
+      "etiqueta": "Estado",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Pendiente",
+        "Confirmado",
+        "En fabricación",
+        "Entregado"
+      ]
+    },
+    {
+      "nombre": "total",
+      "etiqueta": "Total (€)",
+      "tipo": "number",
+      "requerido": true,
+      "minimo": 0
+    }
+  ],
+  "registros": [
+    {
+      "fecha": "2026-01-15",
+      "estado": "En fabricación",
+      "cliente_id": 1,
+      "total": 250000000.0,
+      "identificador": 1
+    },
+    {
+      "fecha": "2026-02-03",
+      "estado": "Confirmado",
+      "cliente_id": 2,
+      "total": 490000000.0,
+      "identificador": 2
+    },
+    {
+      "fecha": "2026-02-18",
+      "estado": "Entregado",
+      "cliente_id": 3,
+      "total": 178000000.0,
+      "identificador": 3
+    },
+    {
+      "fecha": "2026-03-10",
+      "estado": "En fabricación",
+      "cliente_id": 4,
+      "total": 590000000.0,
+      "identificador": 4
+    },
+    {
+      "fecha": "2026-04-05",
+      "estado": "Confirmado",
+      "cliente_id": 5,
+      "total": 444000000.0,
+      "identificador": 5
+    },
+    {
+      "fecha": "2026-05-12",
+      "estado": "En fabricación",
+      "cliente_id": 6,
+      "total": 340000000.0,
+      "identificador": 6
+    },
+    {
+      "fecha": "2026-06-20",
+      "estado": "Confirmado",
+      "cliente_id": 7,
+      "total": 680000000.0,
+      "identificador": 7
+    },
+    {
+      "fecha": "2026-07-11",
+      "estado": "Entregado",
+      "cliente_id": 8,
+      "total": 125000000.0,
+      "identificador": 8
+    },
+    {
+      "fecha": "2026-08-04",
+      "estado": "Confirmado",
+      "cliente_id": 9,
+      "total": 490000000.0,
+      "identificador": 9
+    },
+    {
+      "fecha": "2026-08-27",
+      "estado": "En fabricación",
+      "cliente_id": 10,
+      "total": 296000000.0,
+      "identificador": 10
+    },
+    {
+      "fecha": "2026-09-09",
+      "estado": "Entregado",
+      "cliente_id": 1,
+      "total": 178000000.0,
+      "identificador": 11
+    },
+    {
+      "fecha": "2026-09-22",
+      "estado": "Confirmado",
+      "cliente_id": 4,
+      "total": 870000000.0,
+      "identificador": 12
+    },
+    {
+      "fecha": "2026-10-06",
+      "estado": "Pendiente",
+      "cliente_id": 2,
+      "total": 520000000.0,
+      "identificador": 13
+    },
+    {
+      "fecha": "2026-10-15",
+      "estado": "Pendiente",
+      "cliente_id": 7,
+      "total": 273000000.0,
+      "identificador": 14
+    }
+  ]
+}

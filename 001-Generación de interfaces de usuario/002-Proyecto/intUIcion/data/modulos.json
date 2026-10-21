@@ -1,0 +1,47 @@
+[
+  {
+    "id": "panel",
+    "texto": "Panel",
+    "icono": "◉",
+    "vistas": [
+      { "id": "resumen", "texto": "Resumen", "icono": "▦", "tipo": "resumen" }
+    ]
+  },
+  {
+    "id": "comercial",
+    "texto": "Comercial",
+    "icono": "€",
+    "vistas": [
+      { "id": "pedidos", "texto": "Pedidos", "tipo": "entidad" },
+      { "id": "clientes", "texto": "Aerolíneas", "tipo": "entidad" }
+    ]
+  },
+  {
+    "id": "produccion",
+    "texto": "Producción",
+    "icono": "◭",
+    "vistas": [
+      { "id": "productos", "texto": "Aeronaves", "tipo": "entidad" },
+      { "id": "componentes", "texto": "Componentes", "tipo": "entidad" },
+      { "id": "proveedores", "texto": "Proveedores", "tipo": "entidad" }
+    ]
+  },
+  {
+    "id": "personas",
+    "texto": "Personas",
+    "icono": "☺",
+    "vistas": [
+      { "id": "empleados", "texto": "Empleados", "tipo": "entidad" }
+    ]
+  },
+  {
+    "id": "libreria",
+    "texto": "Librería",
+    "icono": "◈",
+    "vistas": [
+      { "id": "catalogo", "texto": "Componentes", "icono": "◈", "tipo": "catalogo" },
+      { "id": "apariencia", "texto": "Apariencia", "icono": "Aa", "tipo": "apariencia" },
+      { "id": "atajos", "texto": "Atajos de teclado", "icono": "⌨", "tipo": "atajos" }
+    ]
+  }
+]
