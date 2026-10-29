@@ -20,9 +20,12 @@ La aplicación de ejemplo es el **panel interno de Gravelop**, la marca que he c
 | Horizonte `#090D0B` · Órbita `#151A1A` | `--fondo` y `--panel` |
 | Luz `#FBE8DB` | `--texto` |
 | Disco `#AD7856` · Brillo `#D59A76` | `--acento` (botones y superficies) y `--acento-claro` (texto en cobre) |
-| Polvo `#71767A` | aclarado a `#A3A8AB` para el texto secundario: el original no llega al contraste AA en texto pequeño, como ya avisa el manual |
+| Ceniza `#AD9D95` | `--tenue`: todo el texto secundario (7,5:1 sobre Horizonte, 6,7:1 sobre Órbita) |
+| Polvo `#71767A` | `--borde-fuerte`: solo líneas y bordes, porque no llega al contraste AA en texto pequeño |
 | Jost / Inter | nombre y titulares / texto |
 | Texto sobre cobre | Horizonte, no blanco: el blanco sobre `#AD7856` no se lee bien |
+| Tema claro | regla del manual: sobre fondo claro el cobre solo va en el símbolo (Disco sobre Luz = 3,2:1). Con el acento cobre, los botones y textos de acento pasan a Horizonte |
+| Datos de contacto | el manual no usa ninguna web ni dominio: el panel tampoco (el placeholder del login es «Tu email») |
 
 ## Puesta en marcha
 
@@ -155,11 +158,12 @@ Probado en el navegador a 1440×860 y en móvil (375×812). Estos problemas sali
 7. **Un estado «en marcha» salía en rojo**, como si fuera un error. Ahora tiene su propio color (violeta, `--proceso`). Además, los colores de los estados ya no están fijos en la librería: cada columna los define en su JSON.
 8. **Texto blanco sobre el cobre de Gravelop.** Con el acento cobre, el blanco de los botones apenas contrastaba (3,75:1, por debajo del 4,5:1 que pide AA). El texto sobre el acento pasa a ser una propiedad más (`--sobre-acento`), y con el cobre es Horizonte (5,2:1), como en el manual.
 9. **Etiquetas del menú cortadas.** «Facturación» no cabía porque la pista de teclado (`Alt 4`) reservaba su hueco aunque fuese invisible. Ahora aparece encima, solo al pasar el ratón.
-10. **Caché del navegador:** `python3 -m http.server` no impide que el navegador guarde el CSS y el JS. Durante el desarrollo hay que recargar sin caché (`Ctrl + Shift + R`) para ver los cambios.
+10. **Estados ilegibles en el tema claro.** Los colores de las insignias (verde, azul, ámbar, rojo, violeta) estaban pensados para el fondo oscuro, y sobre el claro el ámbar de «Solo redes» apenas se leía. El tema claro redefine esas variables con versiones oscuras, todas por encima de 4,5:1.
+11. **Caché del navegador:** `python3 -m http.server` no impide que el navegador guarde el CSS y el JS. Durante el desarrollo hay que recargar sin caché (`Ctrl + Shift + R`) para ver los cambios.
 
 ## Historial de la marca
 
-La primera versión usaba los datos de REDKYBER, mi ERP de Sistemas de gestión empresarial, y el acento rojo de mi web. Después cambié a **Gravelop**, la marca de mi manual de identidad corporativa, para que la interfaz y el manual vayan juntos. Los commits guardan las dos versiones.
+La primera versión usaba los datos de REDKYBER, mi ERP de Sistemas de gestión empresarial, y el acento rojo de mi web. Después cambié a **Gravelop**, la marca de mi manual de identidad corporativa, para que la interfaz y el manual vayan juntos. Cuando terminé el manual sincronicé los últimos cambios: el color Ceniza para el texto secundario, Polvo solo para líneas, la regla del cobre en fondos claros y nada de dominios web. Los commits guardan todas las versiones.
 
 ## Uso de IA
 
