@@ -21,10 +21,10 @@
   --panel-2: #1a2020;
   --panel-3: #222929;
   --borde: #273030;
-  --borde-fuerte: #364040;
+  --borde-fuerte: #71767a;    /* Polvo: solo líneas y bordes, nunca texto pequeño */
   --texto: #fbe8db;           /* Luz */
-  --tenue: #a3a8ab;           /* Polvo aclarado: el original no llega a AA en texto pequeño */
-  --muy-tenue: #80858a;
+  --tenue: #ad9d95;           /* Ceniza: todo el texto secundario (7,5:1 sobre Horizonte) */
+  --muy-tenue: #ad9d95;       /* Ceniza también: la jerarquía la marcan el tamaño y las mayúsculas */
   --sombra: 0 24px 60px rgb(0 0 0 / .55);
 
   --ok: #3ecf8e;
@@ -64,7 +64,24 @@
   --sombra: 0 24px 60px rgb(40 25 15 / .16);
   /* Sobre fondo claro, el acento como texto se oscurece para que se lea */
   --acento-fuerte: color-mix(in srgb, var(--acento) 72%, #000);
+  /* Los colores de estado del tema oscuro no se leen sobre fondo claro: versiones oscuras */
+  --ok: #126b42;
+  --info: #2560b0;
+  --aviso: #8f5a00;
+  --peligro: #b8262f;
+  --proceso: #5b3fc4;
   color-scheme: light;
+}
+
+/* Regla del manual de Gravelop: sobre fondo claro, el cobre solo va en el símbolo
+   (Disco sobre Luz = 3,2:1). Con el acento cobre y tema claro, botones y textos
+   de acento pasan a Horizonte. !important porque PreferenciasIU fija el acento en línea. */
+:root[data-tema="claro"][data-acento="cobre"] {
+  --acento: #090d0b !important;
+  --acento-claro: #090d0b !important;
+  --acento-fuerte: #090d0b;
+  --sobre-acento: #fbe8db !important;
+  --acento-suave: rgb(9 13 11 / .08);
 }
 
 :root[data-densidad="compacta"] {

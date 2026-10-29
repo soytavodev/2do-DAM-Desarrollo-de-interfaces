@@ -291,6 +291,7 @@ window.intuicion.iu = window.intuicion.iu || {};
       raiz.style.setProperty("--acento", acento.acento);
       raiz.style.setProperty("--acento-claro", acento.claro);
       raiz.style.setProperty("--sobre-acento", acento.sobre);
+      raiz.dataset.acento = acento.id;
       raiz.style.setProperty("--radio", `${this.valores.radio}px`);
     }
   }
