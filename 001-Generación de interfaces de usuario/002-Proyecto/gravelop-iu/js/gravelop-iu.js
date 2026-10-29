@@ -1,7 +1,7 @@
 /**
- * intUIción · librería de interfaz
+ * gravelop-iu · librería de interfaz de Gravelop
  *
- * Namespace técnico: intuicion.iu  (igual que jocarsa-iu usa jocarsa.iu)
+ * Namespace técnico: gravelop.iu  (igual que jocarsa-iu usa jocarsa.iu)
  *
  * Idea de diseño: componentes que guían al usuario para que no tenga que pensar.
  *  - Todo se puede hacer con teclado (atajos + paleta de comandos).
@@ -13,8 +13,8 @@
  * (modal, drawer, toasts, paleta) crean su propio HTML: basta con instanciarlos,
  * no hace falta copiar su marcado en cada página.
  */
-window.intuicion = window.intuicion || {};
-window.intuicion.iu = window.intuicion.iu || {};
+window.gravelop = window.gravelop || {};
+window.gravelop.iu = window.gravelop.iu || {};
 
 (() => {
   "use strict";
@@ -192,7 +192,7 @@ window.intuicion.iu = window.intuicion.iu || {};
 
   /** localStorage con espacio de nombres y a prueba de navegadores que lo bloquean */
   class Almacen {
-    constructor(prefijo = "intuicion") {
+    constructor(prefijo = "gravelop") {
       this.prefijo = prefijo;
     }
 
@@ -1204,7 +1204,7 @@ window.intuicion.iu = window.intuicion.iu || {};
     }
   }
 
-  Object.assign(window.intuicion.iu, {
+  Object.assign(window.gravelop.iu, {
     DOM,
     Utilidades,
     Formato,

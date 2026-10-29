@@ -1,16 +1,16 @@
 /**
- * Pantalla de acceso de intUIción.
+ * Pantalla de acceso del panel de Gravelop (librería gravelop-iu).
  * El acceso es simulado (no hay servidor): valida el formulario, guarda el
  * usuario en el navegador y entra en la aplicación.
  */
 (() => {
   "use strict";
 
-  const { DOM, Almacen, PreferenciasIU, ToastIU, ValidadorIU } = window.intuicion.iu;
+  const { DOM, Almacen, PreferenciasIU, ToastIU, ValidadorIU } = window.gravelop.iu;
 
   class PantallaLogin {
     constructor() {
-      this.almacen = new Almacen("intuicion");
+      this.almacen = new Almacen("gravelop");
       new PreferenciasIU(this.almacen); // respeta el tema y el acento elegidos
       this.toast = new ToastIU();
 

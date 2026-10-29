@@ -1,5 +1,5 @@
 /**
- * Gravelop · panel interno construido con la librería intUIción
+ * Gravelop · panel interno, la aplicación de ejemplo de la librería gravelop-iu
  *
  * Gravelop es la marca que he creado en el manual de identidad corporativa
  * (desarrollo web, apps y marketing digital para pymes). Los clientes,
@@ -11,13 +11,13 @@
   const {
     DOM, Utilidades, Formato, Almacen, OrigenDatos, PreferenciasIU, ToastIU, ModalIU,
     DrawerIU, FormularioIU, TablaIU, AtajosIU, PaletaComandosIU, GestorColumnasIU
-  } = window.intuicion.iu;
+  } = window.gravelop.iu;
 
   const ENTIDADES = ["clientes", "proyectos", "servicios", "facturas"];
 
   class AplicacionGravelop {
     constructor() {
-      this.almacen = new Almacen("intuicion");
+      this.almacen = new Almacen("gravelop");
       this.preferencias = new PreferenciasIU(this.almacen);
       this.toast = new ToastIU();
       this.modal = new ModalIU();
@@ -541,7 +541,7 @@
     /* ---------------- Librería: catálogo de componentes ---------------- */
     vistaCatalogo() {
       this.escenario.appendChild(this.cabeceraVista(
-        "Componentes de intUIción",
+        "Componentes de gravelop-iu",
         "Catálogo vivo: cada pieza funciona igual que dentro de la aplicación."
       ));
 
@@ -863,10 +863,10 @@
     }
   }
 
-  window.intuicion.gravelop = AplicacionGravelop;
+  window.gravelop.Panel = AplicacionGravelop;
 
   document.addEventListener("DOMContentLoaded", () => {
-    window.intuicion.app = new AplicacionGravelop();
-    window.intuicion.app.iniciar();
+    window.gravelop.app = new AplicacionGravelop();
+    window.gravelop.app.iniciar();
   });
 })();
