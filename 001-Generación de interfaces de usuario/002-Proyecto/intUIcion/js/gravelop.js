@@ -80,7 +80,7 @@
     }
 
     pintarUsuario() {
-      const usuario = this.almacen.leer("usuario", { nombre: "Gustavo Delnardo", email: "gustavo@gravelop.es" });
+      const usuario = this.almacen.leer("usuario", { nombre: "Gustavo Delnardo", email: "gustavoedv35@gmail.com" });
       DOM.uno("#usuarioNombre").textContent = usuario.nombre;
       DOM.uno("#avatar").textContent = Utilidades.iniciales(usuario.nombre);
       DOM.uno("#avatar").title = usuario.email;
