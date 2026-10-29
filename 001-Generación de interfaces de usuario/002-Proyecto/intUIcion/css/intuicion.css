@@ -2,29 +2,29 @@
    intUIción · librería de interfaz
    Prefijo de componentes: .iu-   (jocarsa-iu usa .ju-)
    ========================================================= */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jost:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ---------- 1. Propiedades (tokens) ----------
    Todo el aspecto sale de estas variables. La vista "Apariencia"
    las cambia en caliente con JavaScript (tema, acento, densidad, radio). */
 :root {
-  --acento-h: 357;
-  --acento-s: 72%;
-  --acento-l: 55%;
-  --acento: hsl(var(--acento-h) var(--acento-s) var(--acento-l));
-  --acento-fuerte: hsl(var(--acento-h) var(--acento-s) calc(var(--acento-l) + 10%));
-  --acento-suave: hsl(var(--acento-h) var(--acento-s) var(--acento-l) / .14);
-  --sobre-acento: #fff;
+  /* Acento: lo fija PreferenciasIU desde JavaScript. Por defecto, el cobre de Gravelop */
+  --acento: #ad7856;          /* Disco */
+  --acento-claro: #d59a76;    /* Brillo */
+  --acento-fuerte: var(--acento-claro);
+  --acento-suave: color-mix(in srgb, var(--acento) 16%, transparent);
+  --sobre-acento: #090d0b;
 
-  --fondo: #0a0a0c;
-  --panel: #111114;
-  --panel-2: #17171b;
-  --panel-3: #1e1e23;
-  --borde: #26262d;
-  --borde-fuerte: #34343c;
-  --texto: #e9e9eb;
-  --tenue: #8b8b93;
-  --muy-tenue: #5a5a62;
+  /* Paleta de Gravelop (manual de identidad, sacada de Gargantúa) */
+  --fondo: #090d0b;           /* Horizonte */
+  --panel: #151a1a;           /* Órbita */
+  --panel-2: #1a2020;
+  --panel-3: #222929;
+  --borde: #273030;
+  --borde-fuerte: #364040;
+  --texto: #fbe8db;           /* Luz */
+  --tenue: #a3a8ab;           /* Polvo aclarado: el original no llega a AA en texto pequeño */
+  --muy-tenue: #80858a;
   --sombra: 0 24px 60px rgb(0 0 0 / .55);
 
   --ok: #3ecf8e;
@@ -43,6 +43,7 @@
   --ancho-section: 230px;
 
   --fuente: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fuente-marca: 'Jost', 'Inter', sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --transicion: .22s cubic-bezier(.2, .7, .2, 1);
 
@@ -51,17 +52,18 @@
 
 /* Tema claro: mismas variables, otros valores */
 :root[data-tema="claro"] {
-  --fondo: #f3f3f5;
-  --panel: #ffffff;
-  --panel-2: #f7f7f9;
-  --panel-3: #ececf0;
-  --borde: #e2e2e8;
-  --borde-fuerte: #cfcfd8;
-  --texto: #17171c;
-  --tenue: #63636d;
-  --muy-tenue: #9a9aa3;
-  --sombra: 0 24px 60px rgb(20 20 30 / .16);
-  --acento-l: 48%;
+  --fondo: #f7efe8;
+  --panel: #fffaf6;
+  --panel-2: #f8f0e9;
+  --panel-3: #efe4da;
+  --borde: #e6d8cc;
+  --borde-fuerte: #d4c3b5;
+  --texto: #090d0b;           /* Horizonte */
+  --tenue: #565b5f;
+  --muy-tenue: #7a7f83;
+  --sombra: 0 24px 60px rgb(40 25 15 / .16);
+  /* Sobre fondo claro, el acento como texto se oscurece para que se lea */
+  --acento-fuerte: color-mix(in srgb, var(--acento) 72%, #000);
   color-scheme: light;
 }
 
@@ -158,8 +160,8 @@ kbd, .iu-kbd {
 
 .iu-marca svg { width: 30px; height: 30px; flex: none; }
 
-.iu-marca strong { font-size: 16px; letter-spacing: -.01em; white-space: nowrap; }
-.iu-marca strong b { color: var(--acento); font-weight: 700; }
+.iu-marca strong { font-family: var(--fuente-marca); font-size: 19px; font-weight: 600; letter-spacing: .01em; white-space: nowrap; }
+.iu-marca svg { color: var(--texto); }
 .iu-marca small { color: var(--tenue); font-weight: 500; white-space: nowrap; }
 
 .iu-herramientas {
@@ -320,7 +322,8 @@ kbd, .iu-kbd {
   text-align: center;
 }
 
-.iu-item .iu-kbd { opacity: 0; transition: opacity var(--transicion); }
+/* La pista de teclado aparece al pasar el ratón, encima de la etiqueta, sin quitarle espacio */
+.iu-item .iu-kbd { position: absolute; right: 8px; opacity: 0; transition: opacity var(--transicion); }
 .iu-item:hover .iu-kbd { opacity: 1; }
 
 .iu-minimizar {
@@ -419,7 +422,7 @@ body.redimensionando .iu-columna { transition: none; }
   margin-bottom: calc(var(--esp) * 1.5);
 }
 
-.iu-vista-cabecera h1 { margin: 0; font-size: 24px; letter-spacing: -.02em; }
+.iu-vista-cabecera h1 { margin: 0; font-family: var(--fuente-marca); font-size: 26px; font-weight: 500; }
 .iu-vista-cabecera p { margin: 4px 0 0; color: var(--tenue); }
 
 .iu-barra { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
@@ -443,7 +446,7 @@ body.redimensionando .iu-columna { transition: none; }
   transition: background var(--transicion), border-color var(--transicion), transform .08s;
 }
 
-.iu-btn:hover { background: var(--acento-fuerte); }
+.iu-btn:hover { filter: brightness(1.12); }
 .iu-btn:active { transform: translateY(1px); }
 .iu-btn:disabled { opacity: .45; cursor: not-allowed; }
 
@@ -609,7 +612,7 @@ body.redimensionando .iu-columna { transition: none; }
   border-radius: 50%;
   border: 2px solid var(--panel);
   outline: 2px solid transparent;
-  background: hsl(var(--h) 72% 55%);
+  background: var(--muestra);
   cursor: pointer;
 }
 
@@ -1178,8 +1181,8 @@ body.iu-con-drawer .iu-toasts { bottom: 84px; }
 }
 
 .iu-login-lado > * { position: relative; }
-.iu-login-lado h1 { margin: 0; font-size: clamp(32px, 4vw, 52px); line-height: 1.05; letter-spacing: -.03em; }
-.iu-login-lado h1 b { color: var(--acento); }
+.iu-login-lado h1 { margin: 0; font-family: var(--fuente-marca); font-size: clamp(36px, 4.4vw, 60px); font-weight: 500; line-height: 1.05; }
+.iu-login-lado h1 b { color: var(--acento-fuerte); font-weight: 500; }
 .iu-login-lado p { max-width: 420px; color: var(--tenue); font-size: 16px; }
 
 .iu-login-panel {
@@ -1189,7 +1192,7 @@ body.iu-con-drawer .iu-toasts { bottom: 84px; }
 }
 
 .iu-login-tarjeta { width: min(400px, 100%); }
-.iu-login-tarjeta h2 { margin: 0 0 4px; font-size: 24px; }
+.iu-login-tarjeta h2 { margin: 0 0 4px; font-family: var(--fuente-marca); font-size: 26px; font-weight: 500; }
 .iu-login-tarjeta > p { margin: 0 0 24px; color: var(--tenue); }
 .iu-login-tarjeta .iu-form { grid-template-columns: 1fr; }
 

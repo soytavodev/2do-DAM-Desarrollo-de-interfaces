@@ -244,15 +244,20 @@ window.intuicion.iu = window.intuicion.iu || {};
      Preferencias de apariencia (propiedades de la librería)
      ======================================================= */
   class PreferenciasIU {
+    /**
+     * Colores de acento disponibles. Cada uno trae su tono claro (para texto sobre
+     * fondo oscuro) y el color del texto que va encima del acento.
+     * El primero es el de la marca Gravelop (Disco y Brillo de su manual).
+     */
     static ACENTOS = [
-      { nombre: "Rojo REDKYBER", h: 357 },
-      { nombre: "Ámbar cabina", h: 34 },
-      { nombre: "Verde radar", h: 152 },
-      { nombre: "Cian", h: 190 },
-      { nombre: "Violeta", h: 262 }
+      { id: "cobre", nombre: "Cobre Gravelop", acento: "#ad7856", claro: "#d59a76", sobre: "#090d0b" },
+      { id: "rojo", nombre: "Rojo", acento: "#d72e35", claro: "#ff5259", sobre: "#ffffff" },
+      { id: "verde", nombre: "Verde", acento: "#2f9e6e", claro: "#4fd39a", sobre: "#06110c" },
+      { id: "azul", nombre: "Azul", acento: "#3b7ddd", claro: "#7fb0ff", sobre: "#ffffff" },
+      { id: "violeta", nombre: "Violeta", acento: "#7c5ce0", claro: "#a98bff", sobre: "#ffffff" }
     ];
 
-    static DEFECTO = { tema: "oscuro", acento: 357, densidad: "normal", radio: 10 };
+    static DEFECTO = { tema: "oscuro", acento: "cobre", densidad: "normal", radio: 10 };
 
     constructor(almacen) {
       this.almacen = almacen;
@@ -282,7 +287,10 @@ window.intuicion.iu = window.intuicion.iu || {};
       const raiz = document.documentElement;
       raiz.dataset.tema = this.valores.tema;
       raiz.dataset.densidad = this.valores.densidad;
-      raiz.style.setProperty("--acento-h", this.valores.acento);
+      const acento = PreferenciasIU.ACENTOS.find((a) => a.id === this.valores.acento) || PreferenciasIU.ACENTOS[0];
+      raiz.style.setProperty("--acento", acento.acento);
+      raiz.style.setProperty("--acento-claro", acento.claro);
+      raiz.style.setProperty("--sobre-acento", acento.sobre);
       raiz.style.setProperty("--radio", `${this.valores.radio}px`);
     }
   }
@@ -737,11 +745,13 @@ window.intuicion.iu = window.intuicion.iu || {};
   class TablaIU {
     static NUMERICOS = ["moneda", "numero", "stock"];
 
+    /** Colores por defecto de los estados; cada columna puede traer los suyos en "estados" */
     static ESTADOS = {
       Pendiente: "aviso",
-      Confirmado: "info",
-      "En fabricación": "proceso",
-      Entregado: "ok"
+      "En curso": "proceso",
+      Entregado: "ok",
+      Pagada: "ok",
+      Vencida: "peligro"
     };
 
     /**
@@ -794,7 +804,7 @@ window.intuicion.iu = window.intuicion.iu || {};
 
       switch (columna.formato) {
         case "estado":
-          return `<span class="iu-insignia ${TablaIU.ESTADOS[texto] || ""}">${resaltado}</span>`;
+          return `<span class="iu-insignia ${(columna.estados || TablaIU.ESTADOS)[texto] || ""}">${resaltado}</span>`;
         case "etiqueta":
           return `<span class="iu-insignia neutra">${resaltado}</span>`;
         case "stock": {
