@@ -1,8 +1,9 @@
 /**
- * REDKYBER · aplicación construida con la librería intUIción
+ * Gravelop · panel interno construido con la librería intUIción
  *
- * Los datos vienen de mi ERP de Sistemas de gestión empresarial (REDKYBER),
- * importados a JSON con herramientas/importar_redkyber.py.
+ * Gravelop es la marca que he creado en el manual de identidad corporativa
+ * (desarrollo web, apps y marketing digital para pymes). Los clientes,
+ * proyectos y facturas de data/ son datos de demostración inventados.
  */
 (() => {
   "use strict";
@@ -12,9 +13,9 @@
     DrawerIU, FormularioIU, TablaIU, AtajosIU, PaletaComandosIU, GestorColumnasIU
   } = window.intuicion.iu;
 
-  const ENTIDADES = ["pedidos", "clientes", "productos", "componentes", "proveedores", "empleados"];
+  const ENTIDADES = ["clientes", "proyectos", "servicios", "facturas"];
 
-  class AplicacionRedkyber {
+  class AplicacionGravelop {
     constructor() {
       this.almacen = new Almacen("intuicion");
       this.preferencias = new PreferenciasIU(this.almacen);
@@ -48,7 +49,7 @@
         this.estado.modulos = modulos;
         entidades.forEach((definicion) => {
           // Si el usuario ya modificó los datos, se usan los guardados en el navegador
-          const guardados = this.almacen.leer(`datos:${definicion.entidad}`);
+          const guardados = this.almacen.leer(`datos:gravelop:${definicion.entidad}`);
           if (guardados) definicion.registros = guardados;
           this.estado.entidades[definicion.entidad] = definicion;
         });
@@ -74,12 +75,12 @@
 
       if (!this.almacen.leer("bienvenida")) {
         this.almacen.guardar("bienvenida", true);
-        this.toast.info("Bienvenido a intUIción", "Pulsa Ctrl + K para buscar cualquier cosa, o ? para ver los atajos.", { duracion: 9000 });
+        this.toast.info("Bienvenido al panel de Gravelop", "Pulsa Ctrl + K para buscar cualquier cosa, o ? para ver los atajos.", { duracion: 9000 });
       }
     }
 
     pintarUsuario() {
-      const usuario = this.almacen.leer("usuario", { nombre: "Gustavo Delnardo", email: "gustavo@redkyber.aero" });
+      const usuario = this.almacen.leer("usuario", { nombre: "Gustavo Delnardo", email: "gustavo@gravelop.es" });
       DOM.uno("#usuarioNombre").textContent = usuario.nombre;
       DOM.uno("#avatar").textContent = Utilidades.iniciales(usuario.nombre);
       DOM.uno("#avatar").title = usuario.email;
@@ -183,7 +184,7 @@
       this.escenario.scrollTop = 0;
 
       const migas = DOM.crear("div", { class: "iu-migas" });
-      migas.innerHTML = `<button type="button" data-ir="panel">REDKYBER</button><span>›</span><button type="button" data-modulo>${Utilidades.escapar(this.moduloActual.texto)}</button><span>›</span><span>${Utilidades.escapar(vista.texto)}</span>`;
+      migas.innerHTML = `<button type="button" data-ir="panel">Gravelop</button><span>›</span><button type="button" data-modulo>${Utilidades.escapar(this.moduloActual.texto)}</button><span>›</span><span>${Utilidades.escapar(vista.texto)}</span>`;
       DOM.uno("[data-ir]", migas).addEventListener("click", () => this.irVista("panel", "resumen"));
       DOM.uno("[data-modulo]", migas).addEventListener("click", () => this.irVista(this.estado.modulo, this.moduloActual.vistas[0].id));
       this.escenario.appendChild(migas);
@@ -196,7 +197,7 @@
         atajos: () => this.vistaAtajos()
       };
       pintores[vista.tipo]();
-      document.title = `${vista.texto} · intUIción`;
+      document.title = `${vista.texto} · Gravelop`;
     }
 
     cabeceraVista(titulo, descripcion, ...herramientas) {
@@ -283,16 +284,15 @@
     }
 
     guardarDatos(entidadId) {
-      this.almacen.guardar(`datos:${entidadId}`, this.estado.entidades[entidadId].registros);
+      this.almacen.guardar(`datos:gravelop:${entidadId}`, this.estado.entidades[entidadId].registros);
       this.pintarVistas(); // los contadores de la columna se actualizan
     }
 
     nombreRegistro(entidadId, registro) {
-      if (entidadId === "pedidos") {
-        const cliente = this.estado.entidades.clientes.registros.find((c) => c.identificador === registro.cliente_id);
-        return `Pedido nº ${registro.identificador}${cliente ? ` · ${cliente.nombre}` : ""}`;
+      if (entidadId === "facturas") {
+        const proyecto = this.estado.entidades.proyectos.registros.find((p) => p.identificador === registro.proyecto_id);
+        return `Factura ${registro.numero}${proyecto ? ` · ${proyecto.nombre}` : ""}`;
       }
-      if (entidadId === "empleados") return `${registro.nombre} ${registro.apellidos}`;
       return registro.nombre || `#${registro.identificador}`;
     }
 
@@ -448,11 +448,13 @@
 
     /* ---------------- Resumen (panel) ---------------- */
     vistaResumen() {
-      const { pedidos, clientes, componentes, empleados, productos } = this.estado.entidades;
-      const facturacion = pedidos.registros.reduce((s, p) => s + Number(p.total || 0), 0);
-      const pendientes = pedidos.registros.filter((p) => p.estado === "Pendiente").length;
-      const stockBajo = componentes.registros.filter((c) => Number(c.stock) < 50).length;
-      const masaSalarial = empleados.registros.reduce((s, e) => s + Number(e.salario || 0), 0);
+      const { clientes, proyectos, facturas } = this.estado.entidades;
+      const suma = (lista) => lista.reduce((total, f) => total + Number(f.importe || 0), 0);
+      const pagadas = facturas.registros.filter((f) => f.estado === "Pagada");
+      const porCobrar = facturas.registros.filter((f) => f.estado !== "Pagada");
+      const vencidas = facturas.registros.filter((f) => f.estado === "Vencida");
+      const enCurso = proyectos.registros.filter((p) => p.estado === "En curso").length;
+      const sinWeb = clientes.registros.filter((c) => c.presencia === "Sin web").length;
 
       this.escenario.appendChild(this.cabeceraVista(
         "Resumen",
@@ -461,23 +463,29 @@
 
       const kpis = DOM.crear("div", { class: "iu-rejilla kpis" });
       [
-        { titulo: "Facturación total", valor: Formato.moneda(facturacion, true), nota: `${pedidos.registros.length} pedidos`, ir: () => this.irA("pedidos", { filtro: "" }) },
-        { titulo: "Pedidos pendientes", valor: pendientes, nota: "Esperan confirmación", ir: () => this.irA("pedidos", { filtro: "Pendiente" }) },
-        { titulo: "Componentes con stock bajo", valor: stockBajo, nota: "Menos de 50 unidades", ir: () => { this.estado.ordenes.componentes = { campo: "stock", sentido: 1 }; this.irA("componentes", { filtro: "" }); } },
-        { titulo: "Plantilla", valor: empleados.registros.length, nota: `${Formato.moneda(masaSalarial, true)} al año`, ir: () => this.irA("empleados") }
+        { titulo: "Facturado y cobrado", valor: Formato.moneda(suma(pagadas)), nota: `${pagadas.length} facturas pagadas`, ir: () => this.irA("facturas", { filtro: "Pagada" }) },
+        { titulo: "Por cobrar", valor: Formato.moneda(suma(porCobrar)), nota: `${vencidas.length} vencida${vencidas.length === 1 ? "" : "s"}`, ir: () => this.irA("facturas", { filtro: vencidas.length ? "Vencida" : "Pendiente" }) },
+        { titulo: "Proyectos en curso", valor: enCurso, nota: `de ${proyectos.registros.length} proyectos`, ir: () => this.irA("proyectos", { filtro: "En curso" }) },
+        // La razón de ser de Gravelop: pymes que pierden clientes por no verse en internet
+        { titulo: "Clientes sin web", valor: sinWeb, nota: "Oportunidad para una web", ir: () => this.irA("clientes", { filtro: "Sin web" }) }
       ].forEach((kpi) => {
         const boton = DOM.crear("button", { class: "iu-kpi", type: "button", onclick: kpi.ir });
         boton.innerHTML = `<span>${kpi.titulo}</span><strong>${kpi.valor}</strong><small>${kpi.nota} →</small>`;
         kpis.appendChild(boton);
       });
 
-      // Pedidos por estado
-      const porEstado = {};
-      pedidos.registros.forEach((p) => (porEstado[p.estado] = (porEstado[p.estado] || 0) + 1));
+      // Proyectos por estado, en el orden del flujo de trabajo
+      const orden = ["Propuesta", "En curso", "En revisión", "Entregado"];
+      const porEstado = orden
+        .map((estado) => ({ estado, n: proyectos.registros.filter((p) => p.estado === estado).length }))
+        .filter((e) => e.n);
 
-      // Facturación por aerolínea (top 5)
+      // Facturación por cliente (top 5): factura → proyecto → cliente
       const porCliente = {};
-      pedidos.registros.forEach((p) => (porCliente[p.cliente_id] = (porCliente[p.cliente_id] || 0) + Number(p.total || 0)));
+      facturas.registros.forEach((f) => {
+        const proyecto = proyectos.registros.find((p) => p.identificador === f.proyecto_id);
+        if (proyecto) porCliente[proyecto.cliente_id] = (porCliente[proyecto.cliente_id] || 0) + Number(f.importe || 0);
+      });
       const top = Object.entries(porCliente)
         .map(([id, total]) => ({ nombre: clientes.registros.find((c) => c.identificador === Number(id))?.nombre || `#${id}`, total }))
         .sort((a, b) => b.total - a.total)
@@ -486,11 +494,11 @@
       const graficas = DOM.crear("div", { class: "iu-rejilla" });
       graficas.style.marginTop = "var(--esp)";
       graficas.append(
-        this.tarjetaBarras("Pedidos por estado", "Pulsa una barra para filtrar los pedidos.",
-          Object.entries(porEstado).map(([estado, n]) => ({ etiqueta: estado, valor: n, texto: n, ir: () => this.irA("pedidos", { filtro: estado }) }))),
-        this.tarjetaBarras("Facturación por aerolínea", "Las cinco que más han comprado.",
-          top.map((c) => ({ etiqueta: c.nombre, valor: c.total, texto: Formato.moneda(c.total, true), ir: () => this.irA("pedidos", { filtro: c.nombre }) }))),
-        this.tarjetaPrimerosPasos(productos.registros.length)
+        this.tarjetaBarras("Proyectos por estado", "Pulsa una barra para ver esos proyectos.",
+          porEstado.map(({ estado, n }) => ({ etiqueta: estado, valor: n, texto: n, ir: () => this.irA("proyectos", { filtro: estado }) }))),
+        this.tarjetaBarras("Facturación por cliente", "Los cinco que más han facturado.",
+          top.map((c) => ({ etiqueta: c.nombre, valor: c.total, texto: Formato.moneda(c.total), ir: () => this.irA("proyectos", { filtro: c.nombre }) }))),
+        this.tarjetaPrimerosPasos()
       );
 
       this.escenario.append(kpis, graficas);
@@ -515,11 +523,11 @@
       return tarjeta;
     }
 
-    tarjetaPrimerosPasos(aeronaves) {
+    tarjetaPrimerosPasos() {
       const tarjeta = DOM.crear("article", { class: "iu-tarjeta" });
       tarjeta.innerHTML = `
         <h3>Atajos para ir más rápido</h3>
-        <p class="iu-tenue">${aeronaves} modelos de aeronave en catálogo. No hace falta ratón:</p>
+        <p class="iu-tenue">Todo se puede hacer sin ratón:</p>
         <dl class="iu-lista-atajos">
           <div><dt>Buscar cualquier cosa</dt><dd>${AtajosIU.teclas("ctrl+k")}</dd></div>
           <div><dt>Nuevo registro</dt><dd>${AtajosIU.teclas("n")}</dd></div>
@@ -554,7 +562,7 @@
         boton("Fantasma", "fantasma", () => {}), boton("Peligro", "peligro", () => {}));
 
       const insignias = DOM.crear("div", { class: "iu-barra" });
-      insignias.innerHTML = Object.entries(TablaIU.ESTADOS)
+      insignias.innerHTML = Object.entries(this.estado.entidades.proyectos.columnas.find((c) => c.estados).estados)
         .map(([estado, tipo]) => `<span class="iu-insignia ${tipo}">${estado}</span>`).join("");
       tarjeta("Insignias de estado", "El color nunca va solo: siempre acompaña a un texto.", insignias);
 
@@ -570,19 +578,19 @@
       tarjeta("Modal", "Atrapa el foco, se cierra con Esc y devuelve el foco a donde estaba.",
         boton("Abrir modal", "secundario", () => this.modal.abrir({ titulo: "Ventana modal", contenido: "<p>Pulsa Tab: el foco no sale de aquí.</p>" })),
         boton("Confirmación", "", async () => {
-          const ok = await this.modal.confirmar("¿Aterrizar ahora?", "La confirmación devuelve una promesa con la respuesta.", { aceptar: "Aterrizar" });
+          const ok = await this.modal.confirmar("¿Enviar la propuesta?", "La confirmación devuelve una promesa con la respuesta.", { aceptar: "Enviar" });
           this.toast.info("Respuesta", ok ? "Has aceptado" : "Has cancelado");
         }));
 
       tarjeta("Panel lateral", "Redimensionable desde el borde. Por encima de 560 px el formulario pasa a dos columnas, y recuerda el ancho.",
-        boton("Nuevo pedido", "", () => this.abrirFormulario("pedidos", null)),
-        boton("Editar Iberia", "secundario", () => this.abrirFormulario("clientes", this.estado.entidades.clientes.registros[0])));
+        boton("Nuevo proyecto", "", () => this.abrirFormulario("proyectos", null)),
+        boton("Editar un cliente", "secundario", () => this.abrirFormulario("clientes", this.estado.entidades.clientes.registros[0])));
 
       // Validación en vivo de un formulario suelto
       const formulario = new FormularioIU([
         { nombre: "email", etiqueta: "Email", tipo: "email", requerido: true },
-        { nombre: "plazas", etiqueta: "Plazas", tipo: "number", minimo: 1, ayuda: "Al menos una" },
-        { nombre: "matricula", etiqueta: "Matrícula", tipo: "text", patron: "^[A-Z]{1,2}-[A-Z]{3,4}$", ayuda: "Formato EC-ABC" }
+        { nombre: "presupuesto", etiqueta: "Presupuesto (€)", tipo: "number", minimo: 60, ayuda: "El servicio más barato empieza en 60 €" },
+        { nombre: "dominio", etiqueta: "Dominio", tipo: "text", patron: "^[a-z0-9-]+\\.(es|com|dev)$", ayuda: "Por ejemplo, minegocio.es" }
       ]);
       formulario.elemento.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -593,7 +601,7 @@
       tarjetaForm.appendChild(formulario.elemento);
       tarjetaForm.style.gridColumn = "1 / -1";
 
-      const vacio = new TablaIU({ definicion: { titulo: "Inspecciones", columnas: [] }, registros: [], filtro: "" }).renderVacio();
+      const vacio = new TablaIU({ definicion: { titulo: "Campañas", columnas: [] }, registros: [], filtro: "" }).renderVacio();
       tarjeta("Estado vacío", "Una tabla sin datos explica qué hacer en lugar de quedarse en blanco.").appendChild(vacio);
 
       this.escenario.appendChild(rejilla);
@@ -627,8 +635,8 @@
         ["Color de acento", (() => {
           const muestras = DOM.crear("div", { class: "iu-muestras", role: "group", "aria-label": "Color de acento" });
           PreferenciasIU.ACENTOS.forEach((a) => {
-            const m = DOM.crear("button", { class: "iu-muestra", type: "button", title: a.nombre, "aria-label": a.nombre, "aria-pressed": String(a.h === p.acento), onclick: () => this.cambiarPreferencia("acento", a.h) });
-            m.style.setProperty("--h", a.h);
+            const m = DOM.crear("button", { class: "iu-muestra", type: "button", title: a.nombre, "aria-label": a.nombre, "aria-pressed": String(a.id === p.acento), onclick: () => this.cambiarPreferencia("acento", a.id) });
+            m.style.setProperty("--muestra", a.acento);
             muestras.appendChild(m);
           });
           return muestras;
@@ -658,7 +666,7 @@
       acciones.append(
         DOM.crear("button", { class: "iu-btn secundario", type: "button", onclick: () => { this.preferencias.restablecer(); this.pintarEscenario(); } }, "Apariencia por defecto"),
         DOM.crear("button", { class: "iu-btn secundario", type: "button", onclick: () => this.restablecerColumnas() }, "Restablecer columnas"),
-        DOM.crear("button", { class: "iu-btn peligro", type: "button", onclick: () => this.restablecerDatos() }, "Restablecer datos de REDKYBER")
+        DOM.crear("button", { class: "iu-btn peligro", type: "button", onclick: () => this.restablecerDatos() }, "Restablecer datos de demostración")
       );
       tarjeta.appendChild(acciones);
       this.escenario.appendChild(tarjeta);
@@ -683,7 +691,7 @@
     async restablecerDatos() {
       const seguro = await this.modal.confirmar(
         "¿Restablecer los datos?",
-        "Se pierden los registros creados, editados o borrados y se recargan los de REDKYBER.",
+        "Se pierden los registros creados, editados o borrados y se recargan los de demostración.",
         { aceptar: "Restablecer", peligro: true }
       );
       if (!seguro) return;
@@ -750,7 +758,7 @@
         { grupo: "Acciones", texto: "Cambiar tema claro / oscuro", claves: "modo noche dia", icono: "Aa", atajo: "t", accion: () => this.cambiarPreferencia("tema", this.preferencias.valores.tema === "oscuro" ? "claro" : "oscuro") },
         { grupo: "Acciones", texto: "Ver atajos de teclado", claves: "ayuda teclas", icono: "⌨", atajo: "?", accion: () => this.mostrarAtajos() },
         { grupo: "Acciones", texto: "Contraer o expandir los menús", claves: "columnas", icono: "«", atajo: "[", accion: () => this.alternarColumnas() },
-        { grupo: "Acciones", texto: "Restablecer datos de REDKYBER", claves: "reiniciar demo", icono: "↺", accion: () => this.restablecerDatos() },
+        { grupo: "Acciones", texto: "Restablecer datos de demostración", claves: "reiniciar demo", icono: "↺", accion: () => this.restablecerDatos() },
         { grupo: "Acciones", texto: "Cerrar sesión", claves: "salir logout", icono: "⎋", accion: () => this.cerrarSesion() }
       );
 
@@ -855,10 +863,10 @@
     }
   }
 
-  window.intuicion.redkyber = AplicacionRedkyber;
+  window.intuicion.gravelop = AplicacionGravelop;
 
   document.addEventListener("DOMContentLoaded", () => {
-    window.intuicion.app = new AplicacionRedkyber();
+    window.intuicion.app = new AplicacionGravelop();
     window.intuicion.app.iniciar();
   });
 })();
