@@ -12,7 +12,7 @@ En los ejercicios empecé por los componentes nativos de HTML, que son la librer
 
 ### b) Se ha creado un interfaz gráfico utilizando las herramientas de un editor visual.
 
-He creado la interfaz completa de REDKYBER, el ERP de aeronaves que hago en Sistemas de gestión empresarial: cabecera, menú de módulos, menú de vistas, escenario, panel lateral, modal, toasts y paleta de comandos (index.html), además de una pantalla de acceso (login.html). La interfaz no se dibuja a mano pantalla por pantalla: se describe. data/modulos.json define los módulos y sus vistas, y cada data/<entidad>.json define las columnas de la tabla y los campos del formulario. Las clases de la librería generan la interfaz a partir de esas definiciones. Los datos son los reales de mi ERP, importados con herramientas/importar_redkyber.py: 6 entidades y 57 registros.
+He creado la interfaz completa del panel interno de Gravelop, la marca de desarrollo web, apps y marketing digital que diseñé en el manual de identidad corporativa: cabecera, menú de módulos, menú de vistas, escenario, panel lateral, modal, toasts y paleta de comandos (index.html), además de una pantalla de acceso (login.html). La interfaz no se dibuja a mano pantalla por pantalla: se describe. data/modulos.json define los módulos y sus vistas, y cada data/<entidad>.json define las columnas de la tabla y los campos del formulario. Las clases de la librería generan la interfaz a partir de esas definiciones. Los datos son de demostración e inventados: 4 entidades relacionadas (clientes, proyectos, servicios y facturas) con 44 registros. El aspecto sigue el manual de la marca: el símbolo «G orbital» en la cabecera y el login, la versión reducida del símbolo como favicon, la paleta sacada de Gargantúa (Horizonte, Órbita, Luz y el cobre de Disco y Brillo), las tipografías Jost e Inter y el lema «Atraer. Crear. Crecer.» en la pantalla de acceso.
 
 ### c) Se han utilizado las funciones del editor para ubicar los componentes del interfaz.
 
@@ -20,7 +20,7 @@ La ubicación de los componentes se controla con CSS Grid y Flexbox en css/intui
 
 ### d) Se han modificado las propiedades de los componentes para adecuarlas a las necesidades de la aplicación.
 
-Todo el aspecto de intUIción depende de propiedades: variables CSS en :root como --acento-h, --radio, --esp, --alto-control, --fondo o --texto. El tema claro y las densidades compacta y amplia redefinen esas mismas variables. La vista Librería → Apariencia las cambia en vivo mediante la clase PreferenciasIU (color de acento, tema, densidad y radio de las esquinas) y las guarda en el navegador. Los componentes también se configuran con propiedades en JavaScript, por ejemplo toast.mostrar({ tipo, titulo, texto, accion, duracion }) o drawer.abrir({ modo, titulo, contenido, pie, antesDeCerrar }), y los campos del formulario con requerido, min, minimo, patron, ayuda o sugerencias. Algunas propiedades las cambié tras probar la aplicación, por necesidades reales: el foco de los campos dejó de ser rojo porque se confundía con un error, y el estado «En fabricación» tiene ahora su propio color (--proceso).
+Todo el aspecto de intUIción depende de propiedades: variables CSS en :root como --acento, --sobre-acento, --radio, --esp, --alto-control, --fondo o --texto. El tema claro y las densidades compacta y amplia redefinen esas mismas variables. La vista Librería → Apariencia las cambia en vivo mediante la clase PreferenciasIU (color de acento, tema, densidad y radio de las esquinas) y las guarda en el navegador. Los componentes también se configuran con propiedades en JavaScript, por ejemplo toast.mostrar({ tipo, titulo, texto, accion, duracion }) o drawer.abrir({ modo, titulo, contenido, pie, antesDeCerrar }), y los campos del formulario con requerido, min, minimo, patron, ayuda o sugerencias. Algunas propiedades las cambié tras probar la aplicación, por necesidades reales: el foco de los campos dejó de ser rojo porque se confundía con un error, los estados «en marcha» tienen su propio color (--proceso), y al aplicar el cobre de Gravelop el texto de los botones pasó de blanco a Horizonte, porque el blanco sobre cobre no llegaba al contraste mínimo (3,75:1 frente a 5,2:1). Además, los colores de los estados dejaron de estar fijos en la librería: cada columna los define en su JSON con la propiedad estados.
 
 ### e) Se ha analizado el código generado por el editor visual.
 
@@ -28,7 +28,7 @@ Analicé el código del proyecto base del profesor (006-jocarsa-ui-modal-drawer)
 
 ### f) Se ha modificado el código generado por el editor visual.
 
-Reescribí el código base y lo separé en dos partes. js/intuicion.js es la librería, con el namespace intuicion.iu y 15 clases: DOM, Utilidades, Formato, Almacen, OrigenDatos, PreferenciasIU, ToastIU, ModalIU, DrawerIU, ValidadorIU, FormularioIU, TablaIU, AtajosIU, PaletaComandosIU y GestorColumnasIU. js/redkyber.js es la aplicación que la usa. El CSS (css/intuicion.css) también es nuevo: un único sistema de variables, sin reglas que se pisen. Además de cambiar el diseño amplié la funcionalidad:
+Reescribí el código base y lo separé en dos partes. js/intuicion.js es la librería, con el namespace intuicion.iu y 15 clases: DOM, Utilidades, Formato, Almacen, OrigenDatos, PreferenciasIU, ToastIU, ModalIU, DrawerIU, ValidadorIU, FormularioIU, TablaIU, AtajosIU, PaletaComandosIU y GestorColumnasIU. js/gravelop.js es la aplicación que la usa. El CSS (css/intuicion.css) también es nuevo: un único sistema de variables, sin reglas que se pisen. Además de cambiar el diseño amplié la funcionalidad:
 
 - El modal, el panel lateral, los toasts y la paleta crean su propio HTML.
 - El modal devuelve una promesa con la respuesta.
@@ -53,13 +53,14 @@ En los ejercicios vi los eventos desde el principio: eventos.html (onclick en el
 
 ### h) Se ha desarrollado una aplicación que incluye el interfaz gráfico obtenido.
 
-La aplicación es REDKYBER sobre intUIción. Se arranca con python3 -m http.server dentro de 002-Proyecto/intUIcion y tiene:
+La aplicación es el panel de Gravelop sobre intUIción. Se arranca con python3 -m http.server dentro de 002-Proyecto/intUIcion y tiene:
 
 - Un panel de Resumen con KPI y gráficas de barras que llevan al detalle ya filtrado.
-- La gestión completa de pedidos, aerolíneas, aeronaves, componentes, proveedores y empleados: crear, editar y eliminar con deshacer. Si un registro tiene dependientes, como los pedidos de un cliente, pide confirmación antes de borrarlo.
+- La gestión completa de clientes, proyectos, servicios y facturas: crear, editar y eliminar con deshacer. Si un registro tiene dependientes, como los proyectos de un cliente, pide confirmación antes de borrarlo.
+- Indicadores pensados para el negocio de Gravelop, como «Clientes sin web», que es justo el tipo de cliente al que se dirige la marca.
 - Exportación a CSV de las filas visibles.
 - Un catálogo vivo de los componentes de la librería.
 - La vista Apariencia y la vista de atajos de teclado.
 - El login con validación en vivo.
 
-La he probado de verdad en el navegador: crear un pedido con errores y corregirlo, borrar y deshacer, cerrar con cambios sin guardar, buscar «iber» en la paleta y abrir la ficha de Iberia, tema claro y vista móvil. Los fallos que salieron en esas pruebas y cómo los resolví están en el README.
+La he probado de verdad en el navegador: crear una factura con el número mal escrito y corregirlo, borrar y deshacer, cerrar con cambios sin guardar, buscar «espiga» en la paleta y abrir la ficha de ese cliente, tema claro y vista móvil. Los fallos que salieron en esas pruebas y cómo los resolví están en el README.
