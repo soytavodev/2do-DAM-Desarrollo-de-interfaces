@@ -1,0 +1,195 @@
+{
+  "entidad": "facturas",
+  "titulo": "Facturas",
+  "descripcion": "Facturas emitidas y su cobro. Datos de demostración inventados.",
+  "icono": "€",
+  "columnas": [
+    {
+      "campo": "numero",
+      "etiqueta": "Nº",
+      "formato": "mono"
+    },
+    {
+      "campo": "fecha",
+      "etiqueta": "Fecha",
+      "formato": "fecha"
+    },
+    {
+      "campo": "proyecto_id",
+      "etiqueta": "Proyecto",
+      "formato": "referencia"
+    },
+    {
+      "campo": "estado",
+      "etiqueta": "Estado",
+      "formato": "estado",
+      "estados": {
+        "Pendiente": "aviso",
+        "Pagada": "ok",
+        "Vencida": "peligro"
+      }
+    },
+    {
+      "campo": "importe",
+      "etiqueta": "Importe",
+      "formato": "moneda",
+      "sumar": true
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "numero",
+      "etiqueta": "Número",
+      "tipo": "text",
+      "requerido": true,
+      "patron": "^F-\\d{4}-\\d{3}$",
+      "ayuda": "Formato F-2026-001"
+    },
+    {
+      "nombre": "fecha",
+      "etiqueta": "Fecha",
+      "tipo": "date",
+      "requerido": true
+    },
+    {
+      "nombre": "proyecto_id",
+      "etiqueta": "Proyecto",
+      "tipo": "referencia",
+      "entidad": "proyectos",
+      "mostrar": "nombre",
+      "requerido": true
+    },
+    {
+      "nombre": "estado",
+      "etiqueta": "Estado",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Pendiente",
+        "Pagada",
+        "Vencida"
+      ]
+    },
+    {
+      "nombre": "importe",
+      "etiqueta": "Importe (€)",
+      "tipo": "number",
+      "requerido": true,
+      "minimo": 0
+    }
+  ],
+  "registros": [
+    {
+      "numero": "F-2026-001",
+      "fecha": "2026-03-02",
+      "proyecto_id": 1,
+      "estado": "Pagada",
+      "importe": 550,
+      "identificador": 1
+    },
+    {
+      "numero": "F-2026-002",
+      "fecha": "2026-03-30",
+      "proyecto_id": 1,
+      "estado": "Pagada",
+      "importe": 550,
+      "identificador": 2
+    },
+    {
+      "numero": "F-2026-003",
+      "fecha": "2026-04-06",
+      "proyecto_id": 3,
+      "estado": "Pagada",
+      "importe": 700,
+      "identificador": 3
+    },
+    {
+      "numero": "F-2026-004",
+      "fecha": "2026-05-04",
+      "proyecto_id": 3,
+      "estado": "Pagada",
+      "importe": 700,
+      "identificador": 4
+    },
+    {
+      "numero": "F-2026-005",
+      "fecha": "2026-05-11",
+      "proyecto_id": 2,
+      "estado": "Pagada",
+      "importe": 300,
+      "identificador": 5
+    },
+    {
+      "numero": "F-2026-006",
+      "fecha": "2026-06-11",
+      "proyecto_id": 2,
+      "estado": "Pagada",
+      "importe": 300,
+      "identificador": 6
+    },
+    {
+      "numero": "F-2026-007",
+      "fecha": "2026-06-15",
+      "proyecto_id": 6,
+      "estado": "Pagada",
+      "importe": 250,
+      "identificador": 7
+    },
+    {
+      "numero": "F-2026-008",
+      "fecha": "2026-07-20",
+      "proyecto_id": 4,
+      "estado": "Pagada",
+      "importe": 1050,
+      "identificador": 8
+    },
+    {
+      "numero": "F-2026-009",
+      "fecha": "2026-08-03",
+      "proyecto_id": 5,
+      "estado": "Pagada",
+      "importe": 2600,
+      "identificador": 9
+    },
+    {
+      "numero": "F-2026-010",
+      "fecha": "2026-09-01",
+      "proyecto_id": 8,
+      "estado": "Pagada",
+      "importe": 600,
+      "identificador": 10
+    },
+    {
+      "numero": "F-2026-011",
+      "fecha": "2026-09-14",
+      "proyecto_id": 9,
+      "estado": "Pendiente",
+      "importe": 1150,
+      "identificador": 11
+    },
+    {
+      "numero": "F-2026-012",
+      "fecha": "2026-09-15",
+      "proyecto_id": 6,
+      "estado": "Vencida",
+      "importe": 250,
+      "identificador": 12
+    },
+    {
+      "numero": "F-2026-013",
+      "fecha": "2026-10-01",
+      "proyecto_id": 12,
+      "estado": "Pendiente",
+      "importe": 720,
+      "identificador": 13
+    },
+    {
+      "numero": "F-2026-014",
+      "fecha": "2026-10-15",
+      "proyecto_id": 6,
+      "estado": "Pendiente",
+      "importe": 250,
+      "identificador": 14
+    }
+  ]
+}

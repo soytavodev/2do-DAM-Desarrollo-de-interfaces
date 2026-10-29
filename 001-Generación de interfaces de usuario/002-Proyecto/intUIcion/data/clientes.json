@@ -1,21 +1,32 @@
 {
   "entidad": "clientes",
-  "titulo": "Aerolíneas cliente",
-  "descripcion": "Compañías que compran aeronaves a REDKYBER.",
-  "icono": "✈",
+  "titulo": "Clientes",
+  "descripcion": "Pymes y autónomos con los que trabajamos. Datos de demostración inventados.",
+  "icono": "◎",
   "columnas": [
     {
       "campo": "nombre",
-      "etiqueta": "Aerolínea"
+      "etiqueta": "Cliente"
     },
     {
-      "campo": "pais",
-      "etiqueta": "País"
+      "campo": "sector",
+      "etiqueta": "Sector",
+      "formato": "etiqueta"
     },
     {
-      "campo": "telefono",
-      "etiqueta": "Teléfono",
-      "formato": "mono"
+      "campo": "ciudad",
+      "etiqueta": "Ciudad"
+    },
+    {
+      "campo": "presencia",
+      "etiqueta": "Presencia online",
+      "formato": "estado",
+      "estados": {
+        "Sin web": "peligro",
+        "Solo redes": "aviso",
+        "Web antigua": "info",
+        "Web actual": "ok"
+      }
     },
     {
       "campo": "email",
@@ -26,25 +37,52 @@
   "campos": [
     {
       "nombre": "nombre",
-      "etiqueta": "Aerolínea",
+      "etiqueta": "Cliente",
       "tipo": "text",
       "requerido": true,
       "min": 2
     },
     {
-      "nombre": "pais",
-      "etiqueta": "País",
+      "nombre": "sector",
+      "etiqueta": "Sector",
       "tipo": "text",
       "requerido": true,
       "sugerencias": [
-        "España",
-        "Alemania",
-        "Francia",
-        "Reino Unido",
-        "Estados Unidos",
-        "Japón",
-        "Canadá"
+        "Belleza",
+        "Comercio",
+        "Deporte",
+        "Educación",
+        "Hostelería",
+        "Panadería",
+        "Salud",
+        "Servicios profesionales",
+        "Taller mecánico"
       ]
+    },
+    {
+      "nombre": "ciudad",
+      "etiqueta": "Ciudad",
+      "tipo": "text",
+      "sugerencias": [
+        "Valencia",
+        "Burjassot",
+        "Torrent",
+        "Paterna",
+        "Mislata"
+      ]
+    },
+    {
+      "nombre": "presencia",
+      "etiqueta": "Presencia online",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Sin web",
+        "Solo redes",
+        "Web antigua",
+        "Web actual"
+      ],
+      "ayuda": "Lo que tiene hoy en internet"
     },
     {
       "nombre": "telefono",
@@ -55,80 +93,100 @@
     },
     {
       "nombre": "email",
-      "etiqueta": "Email de compras",
+      "etiqueta": "Email",
       "tipo": "email",
       "requerido": true
     }
   ],
   "registros": [
     {
-      "nombre": "Iberia",
-      "pais": "España",
-      "telefono": "915874100",
-      "email": "compras@iberia.es",
+      "nombre": "Horno La Espiga",
+      "sector": "Panadería",
+      "ciudad": "Valencia",
+      "presencia": "Sin web",
+      "telefono": "961 230 114",
+      "email": "hola@espiga.example",
       "identificador": 1
     },
     {
-      "nombre": "Lufthansa",
-      "pais": "Alemania",
-      "telefono": "496986799",
-      "email": "procurement@lufthansa.de",
+      "nombre": "Ruzafa Motor",
+      "sector": "Taller mecánico",
+      "ciudad": "Valencia",
+      "presencia": "Solo redes",
+      "telefono": "963 418 220",
+      "email": "hola@motor.example",
       "identificador": 2
     },
     {
-      "nombre": "Air France",
-      "pais": "Francia",
-      "telefono": "331415656",
-      "email": "compras@airfrance.fr",
+      "nombre": "Clínica Dental Turia",
+      "sector": "Salud",
+      "ciudad": "Valencia",
+      "presencia": "Web antigua",
+      "telefono": "960 552 731",
+      "email": "hola@turia.example",
       "identificador": 3
     },
     {
-      "nombre": "Emirates",
-      "pais": "Emiratos Árabes Unidos",
-      "telefono": "97147081111",
-      "email": "purchasing@emirates.ae",
+      "nombre": "Floristería Azahar",
+      "sector": "Comercio",
+      "ciudad": "Burjassot",
+      "presencia": "Solo redes",
+      "telefono": "961 907 345",
+      "email": "hola@azahar.example",
       "identificador": 4
     },
     {
-      "nombre": "Japan Airlines",
-      "pais": "Japón",
-      "telefono": "81354603111",
-      "email": "orders@jal.jp",
+      "nombre": "Gimnasio Impulso",
+      "sector": "Deporte",
+      "ciudad": "Torrent",
+      "presencia": "Web antigua",
+      "telefono": "961 554 802",
+      "email": "hola@impulso.example",
       "identificador": 5
     },
     {
-      "nombre": "Air Canada",
-      "pais": "Canadá",
-      "telefono": "15143943333",
-      "email": "procurement@aircanada.ca",
+      "nombre": "Asesoría Marina",
+      "sector": "Servicios profesionales",
+      "ciudad": "Valencia",
+      "presencia": "Web actual",
+      "telefono": "963 270 619",
+      "email": "hola@marina.example",
       "identificador": 6
     },
     {
-      "nombre": "Qatar Airways",
-      "pais": "Catar",
-      "telefono": "97441445555",
-      "email": "orders@qatarairways.qa",
+      "nombre": "Restaurante El Brasero",
+      "sector": "Hostelería",
+      "ciudad": "Paterna",
+      "presencia": "Sin web",
+      "telefono": "961 382 047",
+      "email": "hola@brasero.example",
       "identificador": 7
     },
     {
-      "nombre": "Singapore Airlines",
-      "pais": "Singapur",
-      "telefono": "6565415314",
-      "email": "purchasing@singaporeair.sg",
+      "nombre": "Peluquería Tijera Fina",
+      "sector": "Belleza",
+      "ciudad": "Mislata",
+      "presencia": "Solo redes",
+      "telefono": "963 590 128",
+      "email": "hola@fina.example",
       "identificador": 8
     },
     {
-      "nombre": "Delta Airlines",
-      "pais": "Estados Unidos",
-      "telefono": "14047152600",
-      "email": "procurement@delta.com",
+      "nombre": "Academia Clave",
+      "sector": "Educación",
+      "ciudad": "Valencia",
+      "presencia": "Web antigua",
+      "telefono": "960 113 456",
+      "email": "hola@clave.example",
       "identificador": 9
     },
     {
-      "nombre": "British Airways",
-      "pais": "Reino Unido",
-      "telefono": "442087385050",
-      "email": "orders@ba.com",
+      "nombre": "Ferretería Benimaclet",
+      "sector": "Comercio",
+      "ciudad": "Valencia",
+      "presencia": "Sin web",
+      "telefono": "963 661 790",
+      "email": "hola@benimaclet.example",
       "identificador": 10
     }
   ]

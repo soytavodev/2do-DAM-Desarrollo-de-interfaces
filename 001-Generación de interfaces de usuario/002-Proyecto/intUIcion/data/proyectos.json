@@ -1,0 +1,204 @@
+{
+  "entidad": "proyectos",
+  "titulo": "Proyectos",
+  "descripcion": "Trabajos en marcha y entregados. Datos de demostración inventados.",
+  "icono": "◇",
+  "columnas": [
+    {
+      "campo": "nombre",
+      "etiqueta": "Proyecto"
+    },
+    {
+      "campo": "cliente_id",
+      "etiqueta": "Cliente",
+      "formato": "referencia"
+    },
+    {
+      "campo": "servicio_id",
+      "etiqueta": "Servicio",
+      "formato": "referencia"
+    },
+    {
+      "campo": "estado",
+      "etiqueta": "Estado",
+      "formato": "estado",
+      "estados": {
+        "Propuesta": "info",
+        "En curso": "proceso",
+        "En revisión": "aviso",
+        "Entregado": "ok"
+      }
+    },
+    {
+      "campo": "inicio",
+      "etiqueta": "Inicio",
+      "formato": "fecha"
+    },
+    {
+      "campo": "presupuesto",
+      "etiqueta": "Presupuesto",
+      "formato": "moneda",
+      "sumar": true
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "nombre",
+      "etiqueta": "Proyecto",
+      "tipo": "text",
+      "requerido": true,
+      "min": 3
+    },
+    {
+      "nombre": "cliente_id",
+      "etiqueta": "Cliente",
+      "tipo": "referencia",
+      "entidad": "clientes",
+      "mostrar": "nombre",
+      "requerido": true
+    },
+    {
+      "nombre": "servicio_id",
+      "etiqueta": "Servicio",
+      "tipo": "referencia",
+      "entidad": "servicios",
+      "mostrar": "nombre",
+      "requerido": true
+    },
+    {
+      "nombre": "estado",
+      "etiqueta": "Estado",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Propuesta",
+        "En curso",
+        "En revisión",
+        "Entregado"
+      ]
+    },
+    {
+      "nombre": "inicio",
+      "etiqueta": "Fecha de inicio",
+      "tipo": "date",
+      "requerido": true
+    },
+    {
+      "nombre": "presupuesto",
+      "etiqueta": "Presupuesto (€)",
+      "tipo": "number",
+      "requerido": true,
+      "minimo": 0
+    }
+  ],
+  "registros": [
+    {
+      "nombre": "Web y Google Maps",
+      "cliente_id": 1,
+      "servicio_id": 1,
+      "estado": "Entregado",
+      "inicio": "2026-03-02",
+      "presupuesto": 1100,
+      "identificador": 1
+    },
+    {
+      "nombre": "Redes del taller",
+      "cliente_id": 2,
+      "servicio_id": 6,
+      "estado": "En curso",
+      "inicio": "2026-05-11",
+      "presupuesto": 900,
+      "identificador": 2
+    },
+    {
+      "nombre": "Web nueva de la clínica",
+      "cliente_id": 3,
+      "servicio_id": 1,
+      "estado": "Entregado",
+      "inicio": "2026-04-06",
+      "presupuesto": 1400,
+      "identificador": 3
+    },
+    {
+      "nombre": "Tienda de ramos online",
+      "cliente_id": 4,
+      "servicio_id": 2,
+      "estado": "En revisión",
+      "inicio": "2026-07-20",
+      "presupuesto": 2100,
+      "identificador": 4
+    },
+    {
+      "nombre": "App de reservas de clases",
+      "cliente_id": 5,
+      "servicio_id": 3,
+      "estado": "En curso",
+      "inicio": "2026-08-03",
+      "presupuesto": 5200,
+      "identificador": 5
+    },
+    {
+      "nombre": "SEO local de la asesoría",
+      "cliente_id": 6,
+      "servicio_id": 5,
+      "estado": "En curso",
+      "inicio": "2026-06-15",
+      "presupuesto": 750,
+      "identificador": 6
+    },
+    {
+      "nombre": "Carta digital y reservas",
+      "cliente_id": 7,
+      "servicio_id": 1,
+      "estado": "Propuesta",
+      "inicio": "2026-10-19",
+      "presupuesto": 950,
+      "identificador": 7
+    },
+    {
+      "nombre": "Campaña de otoño",
+      "cliente_id": 8,
+      "servicio_id": 7,
+      "estado": "Entregado",
+      "inicio": "2026-09-01",
+      "presupuesto": 600,
+      "identificador": 8
+    },
+    {
+      "nombre": "Web y matrícula online",
+      "cliente_id": 9,
+      "servicio_id": 2,
+      "estado": "En curso",
+      "inicio": "2026-09-14",
+      "presupuesto": 2300,
+      "identificador": 9
+    },
+    {
+      "nombre": "Catálogo y presencia en Maps",
+      "cliente_id": 10,
+      "servicio_id": 1,
+      "estado": "Propuesta",
+      "inicio": "2026-10-26",
+      "presupuesto": 900,
+      "identificador": 10
+    },
+    {
+      "nombre": "Respuestas automáticas con IA",
+      "cliente_id": 6,
+      "servicio_id": 8,
+      "estado": "En revisión",
+      "inicio": "2026-09-28",
+      "presupuesto": 650,
+      "identificador": 11
+    },
+    {
+      "nombre": "Mantenimiento anual",
+      "cliente_id": 3,
+      "servicio_id": 4,
+      "estado": "En curso",
+      "inicio": "2026-05-01",
+      "presupuesto": 720,
+      "identificador": 12
+    }
+  ]
+}

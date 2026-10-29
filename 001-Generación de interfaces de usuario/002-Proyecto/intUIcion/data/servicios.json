@@ -1,0 +1,121 @@
+{
+  "entidad": "servicios",
+  "titulo": "Servicios",
+  "descripcion": "Catálogo de servicios y precio de partida. Datos de demostración inventados.",
+  "icono": "✦",
+  "columnas": [
+    {
+      "campo": "nombre",
+      "etiqueta": "Servicio"
+    },
+    {
+      "campo": "categoria",
+      "etiqueta": "Categoría",
+      "formato": "etiqueta"
+    },
+    {
+      "campo": "modalidad",
+      "etiqueta": "Modalidad"
+    },
+    {
+      "campo": "precio",
+      "etiqueta": "Desde",
+      "formato": "moneda"
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "nombre",
+      "etiqueta": "Servicio",
+      "tipo": "text",
+      "requerido": true,
+      "min": 3
+    },
+    {
+      "nombre": "categoria",
+      "etiqueta": "Categoría",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Desarrollo",
+        "Marketing",
+        "IA"
+      ]
+    },
+    {
+      "nombre": "modalidad",
+      "etiqueta": "Modalidad",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Proyecto",
+        "Mensual"
+      ]
+    },
+    {
+      "nombre": "precio",
+      "etiqueta": "Precio desde (€)",
+      "tipo": "number",
+      "requerido": true,
+      "minimo": 0
+    }
+  ],
+  "registros": [
+    {
+      "nombre": "Web corporativa",
+      "categoria": "Desarrollo",
+      "precio": 900,
+      "modalidad": "Proyecto",
+      "identificador": 1
+    },
+    {
+      "nombre": "Tienda online",
+      "categoria": "Desarrollo",
+      "precio": 1800,
+      "modalidad": "Proyecto",
+      "identificador": 2
+    },
+    {
+      "nombre": "App móvil",
+      "categoria": "Desarrollo",
+      "precio": 4500,
+      "modalidad": "Proyecto",
+      "identificador": 3
+    },
+    {
+      "nombre": "Mantenimiento web",
+      "categoria": "Desarrollo",
+      "precio": 60,
+      "modalidad": "Mensual",
+      "identificador": 4
+    },
+    {
+      "nombre": "SEO local",
+      "categoria": "Marketing",
+      "precio": 250,
+      "modalidad": "Mensual",
+      "identificador": 5
+    },
+    {
+      "nombre": "Gestión de redes sociales",
+      "categoria": "Marketing",
+      "precio": 300,
+      "modalidad": "Mensual",
+      "identificador": 6
+    },
+    {
+      "nombre": "Campañas de publicidad",
+      "categoria": "Marketing",
+      "precio": 200,
+      "modalidad": "Mensual",
+      "identificador": 7
+    },
+    {
+      "nombre": "Automatización con IA",
+      "categoria": "IA",
+      "precio": 600,
+      "modalidad": "Proyecto",
+      "identificador": 8
+    }
+  ]
+}
