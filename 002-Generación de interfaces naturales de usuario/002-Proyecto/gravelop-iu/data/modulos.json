@@ -1,0 +1,7 @@
+[
+  {"id": "panel", "texto": "Panel", "icono": "◉", "vistas": [{"id": "resumen", "texto": "Resumen", "icono": "▦", "tipo": "resumen"}]},
+  {"id": "clientes", "texto": "Clientes", "icono": "◎", "vistas": [{"id": "clientes", "texto": "Clientes", "tipo": "entidad"}]},
+  {"id": "trabajo", "texto": "Trabajo", "icono": "◇", "vistas": [{"id": "proyectos", "texto": "Proyectos", "tipo": "entidad"}, {"id": "servicios", "texto": "Servicios", "tipo": "entidad"}]},
+  {"id": "facturacion", "texto": "Facturación", "icono": "€", "vistas": [{"id": "facturas", "texto": "Facturas", "tipo": "entidad"}]},
+  {"id": "libreria", "texto": "Librería", "icono": "◈", "vistas": [{"id": "catalogo", "texto": "Componentes", "icono": "◈", "tipo": "catalogo"}, {"id": "apariencia", "texto": "Apariencia", "icono": "Aa", "tipo": "apariencia"}, {"id": "atajos", "texto": "Atajos de teclado", "icono": "⌨", "tipo": "atajos"}]}
+]

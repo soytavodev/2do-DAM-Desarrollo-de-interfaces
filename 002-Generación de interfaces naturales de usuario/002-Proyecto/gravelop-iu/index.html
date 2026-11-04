@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gravelop · panel</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/gravelop-iu.css">
+</head>
+<body class="iu-app">
+
+  <header class="iu-cabecera">
+    <a class="iu-marca" href="index.html" aria-label="Gravelop, inicio">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M73.0 30.7 A30 30 0 1 0 80 50" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="square"/>
+        <path d="M52 50 H96" stroke="#AD7856" stroke-width="7"/>
+        <circle cx="50" cy="50" r="5" fill="#D59A76"/>
+      </svg>
+      <strong>Gravelop</strong>
+      <small>panel</small>
+    </a>
+
+    <div class="iu-herramientas">
+      <button class="iu-lanzador" id="lanzador" type="button" aria-label="Buscar o ejecutar un comando">
+        <span aria-hidden="true">⌕</span>
+        <span class="iu-lanzador-texto">Buscar o ejecutar…</span>
+        <kbd>Ctrl</kbd><kbd>K</kbd>
+      </button>
+      <button class="iu-btn" id="nuevo" type="button">+ Nuevo <kbd class="iu-kbd">N</kbd></button>
+    </div>
+
+    <div class="iu-usuario">
+      <button class="iu-btn fantasma icono" id="tema" type="button" title="Cambiar tema (T)" aria-label="Cambiar tema">
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></svg>
+      </button>
+      <div class="iu-avatar" id="avatar" aria-hidden="true">GD</div>
+      <span class="iu-usuario-nombre" id="usuarioNombre"></span>
+      <a class="iu-btn fantasma" id="salir" href="login.html">Salir</a>
+    </div>
+  </header>
+
+  <div class="iu-cuerpo">
+    <nav class="iu-columna" id="navegacion" aria-label="Módulos">
+      <div class="iu-columna-titulo">Módulos</div>
+      <div class="iu-columna-contenido"></div>
+      <button class="iu-minimizar" type="button">« Contraer</button>
+    </nav>
+
+    <div class="iu-separador" role="separator" tabindex="0" aria-orientation="vertical"
+         aria-label="Ancho del menú de módulos (flechas para cambiarlo)"></div>
+
+    <section class="iu-columna" id="vistas" aria-label="Vistas del módulo">
+      <div class="iu-columna-titulo" id="tituloVistas"></div>
+      <div class="iu-columna-contenido"></div>
+      <button class="iu-minimizar" type="button">« Contraer</button>
+    </section>
+
+    <div class="iu-separador" role="separator" tabindex="0" aria-orientation="vertical"
+         aria-label="Ancho del menú de vistas (flechas para cambiarlo)"></div>
+
+    <main class="iu-escenario" id="escenario" tabindex="-1" aria-live="polite"></main>
+  </div>
+
+  <!-- Plantilla de un elemento de menú (columna de módulos y de vistas) -->
+  <template id="tpl-item">
+    <button class="iu-item" type="button">
+      <span class="iu-ficha" aria-hidden="true"></span>
+      <span class="iu-etiqueta"></span>
+    </button>
+  </template>
+
+  <script src="js/gravelop-iu.js"></script>
+  <script src="js/panel.js"></script>
+</body>
+</html>

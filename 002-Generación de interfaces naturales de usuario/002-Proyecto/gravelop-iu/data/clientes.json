@@ -1,0 +1,193 @@
+{
+  "entidad": "clientes",
+  "titulo": "Clientes",
+  "descripcion": "Pymes y autónomos con los que trabajamos. Datos de demostración inventados.",
+  "icono": "◎",
+  "columnas": [
+    {
+      "campo": "nombre",
+      "etiqueta": "Cliente"
+    },
+    {
+      "campo": "sector",
+      "etiqueta": "Sector",
+      "formato": "etiqueta"
+    },
+    {
+      "campo": "ciudad",
+      "etiqueta": "Ciudad"
+    },
+    {
+      "campo": "presencia",
+      "etiqueta": "Presencia online",
+      "formato": "estado",
+      "estados": {
+        "Sin web": "peligro",
+        "Solo redes": "aviso",
+        "Web antigua": "info",
+        "Web actual": "ok"
+      }
+    },
+    {
+      "campo": "email",
+      "etiqueta": "Email",
+      "formato": "email"
+    }
+  ],
+  "campos": [
+    {
+      "nombre": "nombre",
+      "etiqueta": "Cliente",
+      "tipo": "text",
+      "requerido": true,
+      "min": 2
+    },
+    {
+      "nombre": "sector",
+      "etiqueta": "Sector",
+      "tipo": "text",
+      "requerido": true,
+      "sugerencias": [
+        "Belleza",
+        "Comercio",
+        "Deporte",
+        "Educación",
+        "Hostelería",
+        "Panadería",
+        "Salud",
+        "Servicios profesionales",
+        "Taller mecánico"
+      ]
+    },
+    {
+      "nombre": "ciudad",
+      "etiqueta": "Ciudad",
+      "tipo": "text",
+      "sugerencias": [
+        "Valencia",
+        "Burjassot",
+        "Torrent",
+        "Paterna",
+        "Mislata"
+      ]
+    },
+    {
+      "nombre": "presencia",
+      "etiqueta": "Presencia online",
+      "tipo": "select",
+      "requerido": true,
+      "opciones": [
+        "Sin web",
+        "Solo redes",
+        "Web antigua",
+        "Web actual"
+      ],
+      "ayuda": "Lo que tiene hoy en internet"
+    },
+    {
+      "nombre": "telefono",
+      "etiqueta": "Teléfono",
+      "tipo": "tel",
+      "patron": "^[0-9 +]{9,15}$",
+      "ayuda": "Solo números, de 9 a 15 cifras"
+    },
+    {
+      "nombre": "email",
+      "etiqueta": "Email",
+      "tipo": "email",
+      "requerido": true
+    }
+  ],
+  "registros": [
+    {
+      "nombre": "Horno La Espiga",
+      "sector": "Panadería",
+      "ciudad": "Valencia",
+      "presencia": "Sin web",
+      "telefono": "961 230 114",
+      "email": "hola@espiga.example",
+      "identificador": 1
+    },
+    {
+      "nombre": "Ruzafa Motor",
+      "sector": "Taller mecánico",
+      "ciudad": "Valencia",
+      "presencia": "Solo redes",
+      "telefono": "963 418 220",
+      "email": "hola@motor.example",
+      "identificador": 2
+    },
+    {
+      "nombre": "Clínica Dental Turia",
+      "sector": "Salud",
+      "ciudad": "Valencia",
+      "presencia": "Web antigua",
+      "telefono": "960 552 731",
+      "email": "hola@turia.example",
+      "identificador": 3
+    },
+    {
+      "nombre": "Floristería Azahar",
+      "sector": "Comercio",
+      "ciudad": "Burjassot",
+      "presencia": "Solo redes",
+      "telefono": "961 907 345",
+      "email": "hola@azahar.example",
+      "identificador": 4
+    },
+    {
+      "nombre": "Gimnasio Impulso",
+      "sector": "Deporte",
+      "ciudad": "Torrent",
+      "presencia": "Web antigua",
+      "telefono": "961 554 802",
+      "email": "hola@impulso.example",
+      "identificador": 5
+    },
+    {
+      "nombre": "Asesoría Marina",
+      "sector": "Servicios profesionales",
+      "ciudad": "Valencia",
+      "presencia": "Web actual",
+      "telefono": "963 270 619",
+      "email": "hola@marina.example",
+      "identificador": 6
+    },
+    {
+      "nombre": "Restaurante El Brasero",
+      "sector": "Hostelería",
+      "ciudad": "Paterna",
+      "presencia": "Sin web",
+      "telefono": "961 382 047",
+      "email": "hola@brasero.example",
+      "identificador": 7
+    },
+    {
+      "nombre": "Peluquería Tijera Fina",
+      "sector": "Belleza",
+      "ciudad": "Mislata",
+      "presencia": "Solo redes",
+      "telefono": "963 590 128",
+      "email": "hola@fina.example",
+      "identificador": 8
+    },
+    {
+      "nombre": "Academia Clave",
+      "sector": "Educación",
+      "ciudad": "Valencia",
+      "presencia": "Web antigua",
+      "telefono": "960 113 456",
+      "email": "hola@clave.example",
+      "identificador": 9
+    },
+    {
+      "nombre": "Ferretería Benimaclet",
+      "sector": "Comercio",
+      "ciudad": "Valencia",
+      "presencia": "Sin web",
+      "telefono": "963 661 790",
+      "email": "hola@benimaclet.example",
+      "identificador": 10
+    }
+  ]
+}
