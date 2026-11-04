@@ -3,7 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta charset="utf-8">
-  <title>mavr | Detección de manos</title>
+  <title>Detección de manos · Gravelop</title>
 
   <style>
     body{
@@ -35,13 +35,13 @@
       z-index:2;
     }
   </style>
-  <link rel="icon" href="../img/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../css/ejercicios.css">
+  <link rel="icon" href="../img/simbolo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/gravelop-ejercicios.css">
 </head>
 
-<body class="mv-ej mv-ej-camara">
+<body class="gv-ej gv-ej-camara">
 
-  <header class="mv-ej-cabecera"><img src="../img/logo.svg" alt=""><span class="marca">mavr | interfaz integrada</span><h1>Detección de manos</h1><a class="mv-ej-volver" href="../index.html">← Ejercicios</a></header>
+  <header class="gv-ej-cabecera"><img src="../img/simbolo.svg" alt=""><span class="marca">Gravelop</span><h1>Detección de manos</h1><a class="gv-ej-volver" href="../index.html">← Ejercicios</a></header>
 
   <div id="contenedor">
 
@@ -201,7 +201,7 @@
       // DEBUG GLOBAL
       // ============================================
 
-      ctx.fillStyle = "rgba(36,38,43,0.78)";
+      ctx.fillStyle = "rgba(9,13,11,0.78)";
       ctx.fillRect(10,10,170,55);
 
       ctx.fillStyle = "white";
@@ -237,7 +237,7 @@
         // DIBUJAR LÍNEAS
         // ==========================================
 
-        ctx.strokeStyle = "#ec8a4b";
+        ctx.strokeStyle = "#d59a76";
         ctx.lineWidth = 3;
 
         for(const conexion of conexiones){
@@ -329,7 +329,7 @@
           const y = wrist.y * canvas.height;
 
 
-          ctx.fillStyle = "#fcebdd";
+          ctx.fillStyle = "#fbe8db";
           ctx.font = "18px monospace";
 
           ctx.fillText(

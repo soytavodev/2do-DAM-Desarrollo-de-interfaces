@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>mavr | Índice</title>
+  <title>Índice · Gravelop</title>
   <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
   <style>
     html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111;font-family:Arial,sans-serif}
@@ -12,11 +12,11 @@
     #pip canvas{z-index:2;pointer-events:none}
     #estado{position:fixed;left:16px;top:16px;z-index:20;background:#0009;color:white;padding:9px 12px;border-radius:9px;font-size:13px}
   </style>
-  <link rel="icon" href="../img/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../css/ejercicios.css">
+  <link rel="icon" href="../img/simbolo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/gravelop-ejercicios.css">
 </head>
-<body class="mv-ej mv-ej-ra">
-  <a class="mv-ej-chip" href="../index.html" title="Volver a los ejercicios"><img src="../img/logo.svg" alt="">← Ejercicios</a>
+<body class="gv-ej gv-ej-ra">
+  <a class="gv-ej-chip" href="../index.html" title="Volver a los ejercicios"><img src="../img/simbolo.svg" alt="">← Ejercicios</a>
   <div id="estado">Cargando webcam y MediaPipe…</div>
   <div id="pip">
     <video id="video" autoplay muted playsinline></video>
@@ -199,7 +199,7 @@
       const sx = canvas.width/video.videoWidth;
       const sy = canvas.height/video.videoHeight;
 
-      ctx.strokeStyle='#ec8a4b';
+      ctx.strokeStyle='#d59a76';
       ctx.lineWidth=3;
       ctx.strokeRect(
         b.originX*sx,
@@ -339,14 +339,14 @@
       const base=puntos[5];
       const punta=puntos[8];
 
-      ctx.strokeStyle='#fcebdd';
+      ctx.strokeStyle='#fbe8db';
       ctx.lineWidth=6;
       ctx.beginPath();
       ctx.moveTo(base.x*canvas.width,base.y*canvas.height);
       ctx.lineTo(punta.x*canvas.width,punta.y*canvas.height);
       ctx.stroke();
 
-      ctx.fillStyle='#fcebdd';
+      ctx.fillStyle='#fbe8db';
       ctx.beginPath();
       ctx.arc(
         punta.x*canvas.width,

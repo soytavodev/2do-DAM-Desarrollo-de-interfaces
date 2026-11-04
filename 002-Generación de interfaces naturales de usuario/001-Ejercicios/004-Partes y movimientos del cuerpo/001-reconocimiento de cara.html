@@ -3,7 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta charset="utf-8">
-  <title>mavr | Reconocimiento de cara</title>
+  <title>Reconocimiento de cara · Gravelop</title>
 
   <style>
     body{
@@ -35,13 +35,13 @@
       z-index:2;
     }
   </style>
-  <link rel="icon" href="../img/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../css/ejercicios.css">
+  <link rel="icon" href="../img/simbolo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/gravelop-ejercicios.css">
 </head>
 
-<body class="mv-ej mv-ej-camara">
+<body class="gv-ej gv-ej-camara">
 
-  <header class="mv-ej-cabecera"><img src="../img/logo.svg" alt=""><span class="marca">mavr | interfaz integrada</span><h1>Reconocimiento de cara</h1><a class="mv-ej-volver" href="../index.html">← Ejercicios</a></header>
+  <header class="gv-ej-cabecera"><img src="../img/simbolo.svg" alt=""><span class="marca">Gravelop</span><h1>Reconocimiento de cara</h1><a class="gv-ej-volver" href="../index.html">← Ejercicios</a></header>
 
   <div id="contenedor">
     <video
@@ -151,7 +151,7 @@
       // DEBUG GLOBAL
       // ============================================
 
-      ctx.fillStyle = "rgba(36,38,43,0.78)";
+      ctx.fillStyle = "rgba(9,13,11,0.78)";
       ctx.fillRect(10,10,150,50);
 
       ctx.fillStyle = "white";
@@ -191,7 +191,7 @@
         // Bounding box
         // ------------------------------------------
 
-        ctx.strokeStyle = "#ec8a4b";
+        ctx.strokeStyle = "#d59a76";
         ctx.lineWidth = 3;
 
         ctx.strokeRect(
@@ -206,7 +206,7 @@
         // Diagonales
         // ------------------------------------------
 
-        ctx.strokeStyle = "#ec8a4b";
+        ctx.strokeStyle = "#d59a76";
         ctx.lineWidth = 1;
 
         ctx.beginPath();
@@ -224,7 +224,7 @@
         // Centro
         // ------------------------------------------
 
-        ctx.strokeStyle = "#fcebdd";
+        ctx.strokeStyle = "#fbe8db";
 
         ctx.beginPath();
 
@@ -241,7 +241,7 @@
         // Líneas horizontales / verticales
         // ------------------------------------------
 
-        ctx.strokeStyle = "rgba(236,138,75,0.30)";
+        ctx.strokeStyle = "rgba(213,154,118,0.30)";
 
         ctx.beginPath();
 
@@ -298,7 +298,7 @@
         const confianza =
           cara.categories[0]?.score ?? 0;
 
-        ctx.fillStyle = "#ec8a4b";
+        ctx.fillStyle = "#d59a76";
         ctx.font = "16px monospace";
 
         ctx.fillText(

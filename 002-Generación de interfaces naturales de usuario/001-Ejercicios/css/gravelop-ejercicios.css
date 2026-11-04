@@ -1,0 +1,100 @@
+/* =========================================================
+   Gravelop · estilo común de los ejercicios de la unidad 2
+   (partes del cuerpo y realidad aumentada)
+   Identidad del manual de Gravelop: Horizonte, Órbita, Luz,
+   Ceniza y cobre (Disco y Brillo); Jost en títulos, Inter en texto.
+   Se carga DESPUÉS del <style> de cada ejercicio para sobrescribirlo.
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap');
+
+:root{
+  --horizonte:#090d0b;   /* fondo */
+  --orbita:#151a1a;      /* paneles */
+  --orbita2:#1e2424;
+  --polvo:#71767a;       /* solo líneas */
+  --borde:#273030;
+  --ceniza:#ad9d95;      /* texto secundario */
+  --luz:#fbe8db;         /* texto */
+  --disco:#ad7856;       /* cobre: superficies */
+  --brillo:#d59a76;      /* cobre claro: texto y trazos */
+  --error:#ff5c63;
+  --radio:10px;--radio-lg:14px;
+  --sombra:0 2px 10px rgba(0,0,0,.35);--sombra-alta:0 16px 44px rgba(0,0,0,.55);
+  --fuente:'Inter',system-ui,sans-serif;
+  --fuente-marca:'Jost','Inter',sans-serif
+}
+
+/* ---------- base ---------- */
+body.gv-ej{font-family:var(--fuente);font-size:13px;color:var(--luz);background:var(--horizonte);margin:0}
+body.gv-ej *{box-sizing:border-box}
+body.gv-ej button,body.gv-ej input{font-family:inherit}
+
+/* ---------- cabecera de las páginas con scroll ---------- */
+.gv-ej-cabecera{display:flex;align-items:center;gap:12px;height:58px;padding:0 16px;background:var(--orbita);color:var(--luz);border-bottom:1px solid var(--borde);margin-bottom:24px}
+.gv-ej-cabecera img{width:30px;height:30px}
+.gv-ej-cabecera .marca{font-family:var(--fuente-marca);font-size:18px;font-weight:600;white-space:nowrap}
+.gv-ej-cabecera h1{margin:0 0 0 8px;padding-left:14px;border-left:1px solid var(--polvo);font-family:var(--fuente-marca);font-size:16px;font-weight:500;color:var(--brillo);text-align:left}
+.gv-ej-volver{margin-left:auto;padding:7px 16px;border-radius:6px;background:var(--disco);color:var(--horizonte);text-decoration:none;font-weight:600;white-space:nowrap}
+.gv-ej-volver:hover{filter:brightness(1.12)}
+
+/* ---------- botón flotante en las páginas a pantalla completa ---------- */
+.gv-ej-chip{position:fixed;left:16px;top:16px;z-index:50;display:flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border-radius:8px;background:rgba(9,13,11,.88);border:1px solid var(--borde);color:var(--luz);text-decoration:none;font-weight:600;box-shadow:var(--sombra-alta);backdrop-filter:blur(8px)}
+.gv-ej-chip img{width:26px;height:26px}
+.gv-ej-chip:hover{border-color:var(--disco)}
+
+/* ---------- familia «cámara»: vídeo + canvas centrados ---------- */
+body.gv-ej-camara #contenedor{margin:0 auto 24px;border-radius:var(--radio-lg);overflow:hidden;box-shadow:var(--sombra-alta);background:var(--orbita);border:1px solid var(--polvo)}
+
+/* ---------- familia «dividido»: webcam | sprite ---------- */
+body.gv-ej-dividido #pantalla{max-width:calc(100% - 32px);border:1px solid var(--borde);border-radius:var(--radio-lg);overflow:hidden;box-shadow:var(--sombra-alta);background:var(--orbita)}
+body.gv-ej-dividido #webcam{background:var(--horizonte)}
+body.gv-ej-dividido #avatar{background:var(--luz)}
+body.gv-ej-dividido .titulo{background:rgba(9,13,11,.85);color:var(--luz);border-radius:6px;padding:6px 14px;font-weight:600}
+
+/* chat de los avatares 006 y 007 */
+body.gv-ej-dividido #controlesChat{max-width:1280px;margin:16px auto;padding:0 16px;gap:8px;align-items:center}
+body.gv-ej-dividido #textoUsuario{padding:11px 16px;border-radius:8px;border:1px solid var(--borde);background:var(--orbita);color:var(--luz);outline:none}
+body.gv-ej-dividido #textoUsuario:focus{border-color:var(--polvo);box-shadow:0 0 0 3px rgba(251,232,219,.1)}
+body.gv-ej-dividido #enviar,body.gv-ej-dividido #microfono{padding:11px 20px;border-radius:8px;background:var(--disco);color:var(--horizonte);font-weight:600}
+body.gv-ej-dividido #microfono{width:44px;height:44px;padding:0;border-radius:50%;background:var(--orbita2);color:var(--luz)}
+body.gv-ej-dividido #enviar:hover{filter:brightness(1.12)}
+body.gv-ej-dividido #conversacion{max-width:calc(1280px - 32px);margin:0 auto 24px;background:var(--orbita);border:1px solid var(--borde);border-radius:var(--radio-lg);box-shadow:var(--sombra);color:var(--luz)}
+body.gv-ej-dividido .mensaje{border-radius:10px;line-height:1.45}
+body.gv-ej-dividido .yo{background:var(--disco);color:var(--horizonte);border-bottom-right-radius:4px}
+body.gv-ej-dividido .maquina{background:var(--orbita2);color:var(--luz);border-bottom-left-radius:4px}
+
+/* ---------- familia «avatar»: avatar a pantalla completa ---------- */
+body.gv-ej-avatar,body.gv-ej-avatar #pantalla{background:var(--luz)}
+body.gv-ej-avatar #webcam{border-radius:var(--radio-lg);border:1px solid var(--polvo);background:var(--horizonte);box-shadow:var(--sombra-alta)}
+body.gv-ej-avatar #webcam.minimizada{border-radius:50%}
+body.gv-ej-avatar #minimizarWebcam{background:rgba(9,13,11,.75)}
+body.gv-ej-avatar #minimizarWebcam:hover{background:var(--disco)}
+body.gv-ej-avatar #microfono{background:var(--horizonte);color:var(--luz);box-shadow:var(--sombra-alta)}
+body.gv-ej-avatar #microfono:hover{background:var(--orbita2)}
+body.gv-ej-avatar #microfono.escuchando{background:var(--error);box-shadow:0 0 0 10px rgba(255,92,99,.25),var(--sombra-alta)}
+
+/* ---------- familia «realidad aumentada» ---------- */
+body.gv-ej-ra{background:var(--horizonte)}
+body.gv-ej-ra #estado{left:50%;top:16px;transform:translateX(-50%);background:rgba(9,13,11,.88);border:1px solid var(--borde);border-radius:8px;padding:8px 16px;font-size:12px;color:var(--luz);box-shadow:var(--sombra-alta);backdrop-filter:blur(8px)}
+body.gv-ej-ra #pip{border:2px solid var(--disco);border-radius:var(--radio-lg);background:var(--horizonte)}
+
+/* ---------- ejercicio del ratón ---------- */
+.gv-ej-raton{display:grid;place-items:center;height:calc(100vh - 82px);margin-top:-24px}
+.gv-ej-raton output{position:relative;z-index:1;display:block;padding:18px 28px;border-radius:var(--radio-lg);background:var(--orbita);border:1px solid var(--borde);box-shadow:var(--sombra);font-family:var(--fuente-marca);font-size:30px;font-weight:500;color:var(--brillo);text-align:center}
+.gv-ej-raton small{display:block;margin-top:6px;font-family:var(--fuente);font-size:12px;font-weight:400;color:var(--ceniza)}
+.gv-ej-ejes::before,.gv-ej-ejes::after{content:"";position:fixed;background:var(--borde);pointer-events:none}
+.gv-ej-ejes::before{left:50%;top:58px;bottom:0;width:1px}
+.gv-ej-ejes::after{top:50%;left:0;right:0;height:1px}
+
+/* ---------- índice de ejercicios ---------- */
+.gv-ej-indice{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+.gv-ej-indice > p{color:var(--ceniza)}
+.gv-ej-aviso{padding:12px 16px;border-radius:var(--radio);background:var(--orbita);border-left:3px solid var(--disco);color:var(--luz);margin:0 0 20px}
+.gv-ej-aviso code{color:var(--brillo)}
+.gv-ej-indice h2{font-family:var(--fuente-marca);font-size:20px;font-weight:500;margin:28px 0 12px}
+.gv-ej-rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.gv-ej-tarjeta{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:var(--radio-lg);background:var(--orbita);border:1px solid var(--borde);color:inherit;text-decoration:none;transition:transform .15s,border-color .15s}
+.gv-ej-tarjeta:hover{transform:translateY(-2px);border-color:var(--disco)}
+.gv-ej-tarjeta .ficha{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:8px;background:var(--disco);color:var(--horizonte);font-weight:700;font-size:12px}
+.gv-ej-tarjeta strong{display:block;margin-bottom:3px}
+.gv-ej-tarjeta span{color:var(--ceniza);font-size:12px;line-height:1.4}
