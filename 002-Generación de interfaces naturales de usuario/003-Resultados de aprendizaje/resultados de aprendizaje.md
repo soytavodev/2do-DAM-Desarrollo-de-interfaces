@@ -70,6 +70,17 @@ Con MediaPipe he detectado partes concretas del cuerpo:
 
 En 007-avatar-chatbot-lipsync el avatar además mueve la boca mientras habla.
 
+Además he hecho un ejercicio propio, **011-comandos por gestos**. Con el reconocedor de gestos de MediaPipe (GestureRecognizer), cada gesto de la mano ejecuta una orden en un panel de Gravelop:
+
+- ✋ mano abierta: siguiente vista.
+- ☝️ índice: vista anterior.
+- ✌️ dos dedos: cambiar el tema.
+- 👍 pulgar arriba: crear un cliente o confirmar.
+- 👎 pulgar abajo: cancelar.
+- ✊ puño: pausar o reanudar las órdenes.
+
+Para evitar órdenes por error, el gesto tiene que mantenerse 0,7 segundos (un anillo se va llenando), con una confianza mínima del 60 %. Entre orden y orden hay una espera, y para repetir la misma orden hay que bajar la mano o cambiar de gesto. La página dibuja la mano, dice qué gesto detecta y lleva un registro de las órdenes ejecutadas. Si no hay cámara, unos botones simulan cada gesto.
+
 ### f) Se ha integrado la realidad aumentada en los interfaces de usuario.
 
 En 005-Realidad aumentada he usado A-Frame junto con la cámara:

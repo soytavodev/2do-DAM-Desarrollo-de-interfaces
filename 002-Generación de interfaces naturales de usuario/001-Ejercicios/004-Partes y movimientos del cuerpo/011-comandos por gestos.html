@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comandos por gestos · Gravelop</title>
+  <link rel="icon" href="../img/simbolo.svg" type="image/svg+xml">
+  <style>
+    /* Disposición propia del ejercicio: cámara a la izquierda, panel de prueba a la derecha */
+    .gestos { max-width: 1200px; margin: 0 auto 32px; padding: 0 16px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; }
+    .caja { background: var(--orbita); border: 1px solid var(--borde); border-radius: var(--radio-lg); overflow: hidden; }
+    .caja > h2 { margin: 0; padding: 12px 16px; border-bottom: 1px solid var(--borde); font-family: var(--fuente-marca); font-size: 17px; font-weight: 500; }
+
+    #camara { position: relative; aspect-ratio: 4 / 3; background: var(--horizonte); }
+    #camara video, #camara canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+    #estado { position: absolute; left: 12px; top: 12px; padding: 6px 12px; border-radius: 8px; background: rgba(9, 13, 11, .85); color: var(--luz); font-size: 12px; }
+
+    /* Gesto detectado y anillo que se llena mientras lo mantienes */
+    .lectura { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-top: 1px solid var(--borde); }
+    .anillo { --progreso: 0; width: 64px; height: 64px; flex: none; display: grid; place-items: center; border-radius: 50%; font-size: 28px;
+      background: radial-gradient(var(--orbita) 58%, transparent 60%), conic-gradient(var(--brillo) calc(var(--progreso) * 1turn), var(--borde) 0); }
+    .lectura strong { display: block; font-family: var(--fuente-marca); font-size: 18px; font-weight: 500; }
+    .lectura span { color: var(--ceniza); }
+
+    /* Panel de prueba: lo que manejan los gestos */
+    .vistas { display: grid; gap: 6px; padding: 14px 16px; }
+    .vista { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--borde); color: var(--ceniza); transition: background .2s, color .2s, border-color .2s; }
+    .vista.activa { background: rgba(173, 120, 86, .16); border-color: var(--disco); color: var(--luz); }
+    .vista.activa::after { content: "◀"; margin-left: auto; color: var(--brillo); font-size: 11px; }
+
+    .leyenda { list-style: none; margin: 0; padding: 4px 16px 14px; display: grid; gap: 4px; font-size: 13px; }
+    .leyenda li { display: flex; gap: 10px; align-items: center; padding: 5px 8px; border-radius: 6px; }
+    .leyenda li.disparado { background: rgba(213, 154, 118, .18); }
+    .leyenda b { width: 26px; font-size: 18px; text-align: center; }
+    .leyenda em { margin-left: auto; color: var(--ceniza); font-style: normal; font-size: 12px; }
+
+    .simular { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 14px; }
+    .simular button { padding: 6px 10px; border: 1px solid var(--borde); border-radius: 6px; background: var(--orbita2); color: var(--luz); cursor: pointer; }
+    .simular button:hover { border-color: var(--disco); }
+
+    #registro { margin: 0; padding: 10px 16px 14px; list-style: none; max-height: 160px; overflow: auto; font-family: monospace; font-size: 12px; color: var(--ceniza); border-top: 1px solid var(--borde); }
+    #registro li:first-child { color: var(--luz); }
+
+    /* Confirmación que se acepta con 👍 y se cancela con 👎 */
+    /* El fondo oscuro no captura clics: así los botones de simular siguen funcionando sin cámara */
+    #confirmacion { position: fixed; inset: 0; display: none; place-items: center; background: rgba(9, 13, 11, .7); z-index: 20; pointer-events: none; }
+    #confirmacion.abierta { display: grid; }
+    #confirmacion div { padding: 22px 26px; border-radius: var(--radio-lg); background: var(--orbita); border: 1px solid var(--polvo); text-align: center; }
+    #confirmacion h3 { margin: 0 0 6px; font-family: var(--fuente-marca); font-weight: 500; font-size: 22px; }
+    #confirmacion p { margin: 0; color: var(--ceniza); }
+
+    /* Tema claro del panel de prueba (gesto ✌️) */
+    body.claro { --horizonte: #f7efe8; --orbita: #fffaf6; --orbita2: #f3e9e0; --borde: #e6d8cc; --luz: #090d0b; --ceniza: #565b5f; }
+    body.claro .vista.activa { background: rgba(9, 13, 11, .06); border-color: #090d0b; }
+
+    @media (max-width: 860px) { .gestos { grid-template-columns: 1fr; } }
+  </style>
+  <link rel="stylesheet" href="../css/gravelop-ejercicios.css">
+</head>
+<body class="gv-ej">
+  <header class="gv-ej-cabecera"><img src="../img/simbolo.svg" alt=""><span class="marca">Gravelop</span><h1>Comandos por gestos</h1><a class="gv-ej-volver" href="../index.html">← Ejercicios</a></header>
+
+  <main class="gestos">
+    <section class="caja">
+      <h2>Cámara</h2>
+      <div id="camara">
+        <video id="video" playsinline muted></video>
+        <canvas id="lienzo"></canvas>
+        <span id="estado">Pidiendo permiso para la cámara…</span>
+      </div>
+      <div class="lectura">
+        <div class="anillo" id="anillo">·</div>
+        <div><strong id="gestoNombre">Sin mano</strong><span id="gestoAyuda">Pon la mano delante de la cámara y mantén un gesto.</span></div>
+      </div>
+      <ol id="registro" reversed></ol>
+    </section>
+
+    <section class="caja">
+      <h2>Panel que manejas con la mano</h2>
+      <div class="vistas" id="vistas"></div>
+      <ul class="leyenda" id="leyenda"></ul>
+      <div class="simular" id="simular" title="Para probar sin cámara"></div>
+    </section>
+  </main>
+
+  <div id="confirmacion" role="dialog" aria-modal="true">
+    <div><h3>¿Crear un cliente nuevo?</h3><p>👍 para confirmar · 👎 para cancelar</p></div>
+  </div>
+
+  <script type="module">
+    import { FilesetResolver, GestureRecognizer, DrawingUtils }
+      from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+
+    // ============================================
+    // 1. ÓRDENES: qué hace cada gesto
+    //    Los nombres son los gestos que reconoce el modelo de MediaPipe.
+    // ============================================
+    const VISTAS = ["Resumen", "Clientes", "Proyectos", "Servicios", "Facturas"];
+    let vistaActual = 0;
+    let pausado = false;
+
+    const ORDENES = {
+      Open_Palm:   { icono: "✋", texto: "Siguiente vista",     accion: () => irA(vistaActual + 1) },
+      Pointing_Up: { icono: "☝️", texto: "Vista anterior",       accion: () => irA(vistaActual - 1) },
+      Victory:     { icono: "✌️", texto: "Cambiar tema",         accion: () => document.body.classList.toggle("claro") },
+      Thumb_Up:    { icono: "👍", texto: "Nuevo cliente / confirmar", accion: () => confirmar() },
+      Thumb_Down:  { icono: "👎", texto: "Cancelar",             accion: () => cerrarConfirmacion("Cancelado") },
+      Closed_Fist: { icono: "✊", texto: "Pausar / reanudar",    accion: () => { pausado = !pausado; anotar(pausado ? "Órdenes en pausa" : "Órdenes activas"); } }
+    };
+
+    // Para que un gesto cuente hay que mantenerlo, y después hay una pausa:
+    // así no se disparan órdenes al pasar la mano o al cambiar de gesto.
+    const MANTENER_MS = 700;
+    const ESPERA_MS = 1200;
+    const CONFIANZA = 0.6;
+
+    // ============================================
+    // 2. PANEL DE PRUEBA
+    // ============================================
+    const $ = (s) => document.querySelector(s);
+
+    function pintarVistas() {
+      $("#vistas").innerHTML = VISTAS.map((v, i) =>
+        `<div class="vista ${i === vistaActual ? "activa" : ""}">${v}</div>`).join("");
+    }
+
+    function irA(indice) {
+      vistaActual = (indice + VISTAS.length) % VISTAS.length;
+      pintarVistas();
+      anotar(`Vista: ${VISTAS[vistaActual]}`);
+    }
+
+    function confirmar() {
+      const caja = $("#confirmacion");
+      if (caja.classList.contains("abierta")) cerrarConfirmacion("Cliente creado ✔");
+      else { caja.classList.add("abierta"); anotar("¿Crear cliente? esperando 👍 o 👎"); }
+    }
+
+    function cerrarConfirmacion(texto) {
+      const caja = $("#confirmacion");
+      if (!caja.classList.contains("abierta")) return;
+      caja.classList.remove("abierta");
+      anotar(texto);
+    }
+
+    function anotar(texto) {
+      const li = document.createElement("li");
+      li.textContent = `${new Date().toLocaleTimeString("es-ES")}  ${texto}`;
+      $("#registro").prepend(li);
+    }
+
+    $("#leyenda").innerHTML = Object.entries(ORDENES).map(([g, o]) =>
+      `<li data-gesto="${g}"><b>${o.icono}</b>${o.texto}<em>${g}</em></li>`).join("");
+    $("#simular").innerHTML = Object.entries(ORDENES).map(([g, o]) =>
+      `<button type="button" data-gesto="${g}" title="Simular ${g}">${o.icono}</button>`).join("");
+    $("#simular").addEventListener("click", (e) => {
+      const g = e.target.closest("button")?.dataset.gesto;
+      if (g) ejecutar(g);
+    });
+    pintarVistas();
+
+    function ejecutar(gesto) {
+      const orden = ORDENES[gesto];
+      if (!orden) return;
+      // En pausa solo funciona el puño, para poder reanudar
+      if (pausado && gesto !== "Closed_Fist") return;
+      orden.accion();
+      const fila = $(`.leyenda li[data-gesto="${gesto}"]`);
+      fila.classList.add("disparado");
+      setTimeout(() => fila.classList.remove("disparado"), 600);
+    }
+
+    // ============================================
+    // 3. CÁMARA Y MODELO
+    // ============================================
+    const video = $("#video");
+    const lienzo = $("#lienzo");
+    const ctx = lienzo.getContext("2d");
+    let reconocedor;
+
+    try {
+      video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+      await video.play();
+      $("#estado").textContent = "Cargando el modelo de gestos…";
+
+      const vision = await FilesetResolver.forVisionTasks(
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm");
+      reconocedor = await GestureRecognizer.createFromOptions(vision, {
+        baseOptions: {
+          modelAssetPath: "https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task"
+        },
+        runningMode: "VIDEO",
+        numHands: 1
+      });
+      $("#estado").textContent = "Listo · mantén un gesto";
+      lienzo.width = video.videoWidth;
+      lienzo.height = video.videoHeight;
+      requestAnimationFrame(bucle);
+    } catch (error) {
+      $("#estado").textContent = "Sin cámara: usa los botones para simular los gestos";
+      anotar(`Error: ${error.message}`);
+    }
+
+    // ============================================
+    // 4. BUCLE: detectar, dibujar y decidir
+    // ============================================
+    const dibujo = new DrawingUtils(ctx);
+    let gestoMantenido = null;
+    let desde = 0;
+    let ultimoDisparo = 0;
+    let ultimoFotograma = -1;
+    let yaDisparado = null; // el último gesto que ejecutó su orden
+
+    function bucle() {
+      const ahora = performance.now();
+
+      // Solo procesamos fotogramas nuevos (la cámara de VirtualBox puede ir más lenta que la pantalla)
+      if (video.currentTime !== ultimoFotograma) {
+        ultimoFotograma = video.currentTime;
+        const resultado = reconocedor.recognizeForVideo(video, ahora);
+
+        ctx.clearRect(0, 0, lienzo.width, lienzo.height);
+        for (const mano of resultado.landmarks) {
+          dibujo.drawConnectors(mano, GestureRecognizer.HAND_CONNECTIONS, { color: "#D59A76", lineWidth: 3 });
+          dibujo.drawLandmarks(mano, { color: "#FBE8DB", lineWidth: 1, radius: 3 });
+        }
+
+        const mejor = resultado.gestures[0]?.[0];
+        const gesto = mejor && mejor.score >= CONFIANZA && ORDENES[mejor.categoryName] ? mejor.categoryName : null;
+        decidir(gesto, mejor, ahora);
+      }
+
+      requestAnimationFrame(bucle);
+    }
+
+    function decidir(gesto, mejor, ahora) {
+      if (gesto !== gestoMantenido) { gestoMantenido = gesto; desde = ahora; }
+      // Para repetir la misma orden hay que bajar la mano o cambiar de gesto
+      if (gesto !== yaDisparado) yaDisparado = null;
+
+      const enEspera = ahora - ultimoDisparo < ESPERA_MS || gesto === yaDisparado;
+      const progreso = gesto && !enEspera ? Math.min(1, (ahora - desde) / MANTENER_MS) : 0;
+      $("#anillo").style.setProperty("--progreso", progreso);
+      $("#anillo").textContent = gesto ? ORDENES[gesto].icono : "·";
+      $("#gestoNombre").textContent = gesto ? ORDENES[gesto].texto : (mejor ? "Gesto sin orden" : "Sin mano");
+      $("#gestoAyuda").textContent = gesto
+        ? (pausado && gesto !== "Closed_Fist" ? "En pausa: haz ✊ para reanudar" : `${mejor.categoryName} · ${Math.round(mejor.score * 100)} % de confianza`)
+        : "Pon la mano delante de la cámara y mantén un gesto.";
+
+      if (progreso >= 1) {
+        ultimoDisparo = ahora;
+        yaDisparado = gesto;
+        ejecutar(gesto);
+      }
+    }
+  </script>
+</body>
+</html>
