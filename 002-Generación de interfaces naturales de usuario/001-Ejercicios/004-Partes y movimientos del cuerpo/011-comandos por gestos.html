@@ -178,7 +178,13 @@
     const ctx = lienzo.getContext("2d");
     let reconocedor;
 
+    // MediaPipe necesita WebGL para analizar la imagen. En una máquina virtual sin
+    // tarjeta gráfica Chrome lo desactiva y el modelo no detecta nada sin dar error:
+    // mejor decirlo claro que mostrar «Listo» y no reaccionar.
+    const hayWebGL = Boolean(document.createElement("canvas").getContext("webgl2") || document.createElement("canvas").getContext("webgl"));
+
     try {
+      if (!hayWebGL) throw new Error("Chrome no tiene WebGL activo (en una máquina virtual sin aceleración 3D hay que abrirlo con --enable-unsafe-swiftshader)");
       video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
       await video.play();
       $("#estado").textContent = "Cargando el modelo de gestos…";
@@ -197,7 +203,7 @@
       lienzo.height = video.videoHeight;
       requestAnimationFrame(bucle);
     } catch (error) {
-      $("#estado").textContent = "Sin cámara: usa los botones para simular los gestos";
+      $("#estado").textContent = hayWebGL ? "Sin cámara: usa los botones para simular los gestos" : "Sin WebGL: no se pueden detectar gestos (mira el registro)";
       anotar(`Error: ${error.message}`);
     }
 

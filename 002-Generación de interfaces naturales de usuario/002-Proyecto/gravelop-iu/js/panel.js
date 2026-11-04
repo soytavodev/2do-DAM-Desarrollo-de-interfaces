@@ -788,7 +788,16 @@
         const nota = id === actual
           ? ` (PANTALLA ACTUAL${this.estado.filtros[id] ? `, filtrada por «${this.estado.filtros[id]}»` : ""})`
           : "";
-        bloques.push(`## ${tabla.definicion.titulo}${nota}\n${csv}`);
+        // Un modelo de 1,5B lee mal las tablas: le damos los grupos ya hechos.
+        // Para cada columna de estado: «Sin web (3): Horno La Espiga, …»
+        const nombre = (r) => this.nombreRegistro(id, r);
+        const grupos = columnas.filter((c) => c.formato === "estado").map((c) => {
+          const porValor = {};
+          filas.forEach((r) => (porValor[r[c.campo]] = porValor[r[c.campo]] || []).push(nombre(r)));
+          return Object.entries(porValor).map(([valor, lista]) => `- ${c.etiqueta} = ${valor} (${lista.length}): ${lista.join(", ")}`).join("\n");
+        });
+        const resumen = grupos.length ? `\nRESUMEN YA CALCULADO (úsalo tal cual):\n${grupos.join("\n")}\n` : "";
+        bloques.push(`## ${tabla.definicion.titulo}${nota}${resumen}\nTabla completa:\n${csv}`);
       });
 
       return `Hoy es ${new Date().toLocaleDateString("es-ES")}. Vista abierta: ${this.vistaActual?.texto}.\n\n${bloques.join("\n\n")}`;

@@ -13,10 +13,21 @@
  */
 
 header("Content-Type: application/json; charset=utf-8");
+// En CPU una respuesta larga puede pasar de los 30 s que PHP permite por defecto
+set_time_limit(200);
 
 // Modelo ligero: el equipo no tiene tarjeta gráfica (ollama pull qwen2.5:1.5b)
 const MODELO = "qwen2.5:1.5b";
 const OLLAMA = "http://localhost:11434/api/chat";
+
+/**
+ * Recorta un texto a $max caracteres sin partir letras con tilde.
+ * No uso mb_substr porque mi PHP no tiene la extensión mbstring:
+ * la expresión regular con /u cuenta caracteres UTF-8 sin necesitarla.
+ */
+function recortar(string $texto, int $max): string {
+    return preg_match('/^.{0,' . $max . '}/su', $texto, $m) ? $m[0] : "";
+}
 
 function responder(int $codigo, string $texto): void {
     http_response_code($codigo);
@@ -38,8 +49,8 @@ if ($mensaje === "") {
     responder(400, "El mensaje está vacío.");
 }
 // Límites para que nadie mande textos enormes a un modelo que corre en mi CPU
-$mensaje = mb_substr($mensaje, 0, 2000);
-$contexto = mb_substr($contexto, 0, 6000);
+$mensaje = recortar($mensaje, 2000);
+$contexto = recortar($contexto, 6000);
 
 // 2. Instrucciones del sistema: quién es el asistente y qué datos puede usar
 $sistema = "Eres el asistente del panel interno de Gravelop, un estudio de desarrollo web, apps "
@@ -52,7 +63,7 @@ $mensajes = [["role" => "system", "content" => $sistema]];
 foreach (array_slice($historial, -6) as $paso) {
     $rol = $paso["role"] ?? "";
     if (($rol === "user" || $rol === "assistant") && isset($paso["content"])) {
-        $mensajes[] = ["role" => $rol, "content" => mb_substr((string)$paso["content"], 0, 2000)];
+        $mensajes[] = ["role" => $rol, "content" => recortar((string)$paso["content"], 2000)];
     }
 }
 $mensajes[] = ["role" => "user", "content" => $mensaje];
