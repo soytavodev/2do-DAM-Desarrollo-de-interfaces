@@ -6,6 +6,7 @@
   <title>Gravelop · panel</title>
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/gravelop-iu.css">
+  <link rel="stylesheet" href="css/gravelop-iu-natural.css">
 </head>
 <body class="iu-app">
 
@@ -27,6 +28,8 @@
         <kbd>Ctrl</kbd><kbd>K</kbd>
       </button>
       <button class="iu-btn" id="nuevo" type="button">+ Nuevo <kbd class="iu-kbd">N</kbd></button>
+      <button class="iu-btn secundario" id="abrirAsistente" type="button" title="Asistente con IA local (A)">✦ Asistente <kbd class="iu-kbd">A</kbd></button>
+      <button class="iu-btn secundario icono" id="manosLibres" type="button" aria-pressed="false" title="Manos libres: maneja el panel con la voz (M)" aria-label="Manos libres">🎙</button>
     </div>
 
     <div class="iu-usuario">
@@ -70,6 +73,7 @@
   </template>
 
   <script src="js/gravelop-iu.js"></script>
+  <script src="js/gravelop-iu-natural.js"></script>
   <script src="js/panel.js"></script>
 </body>
 </html>

@@ -10,7 +10,8 @@
 
   const {
     DOM, Utilidades, Formato, Almacen, OrigenDatos, PreferenciasIU, ToastIU, ModalIU,
-    DrawerIU, FormularioIU, TablaIU, AtajosIU, PaletaComandosIU, GestorColumnasIU
+    DrawerIU, FormularioIU, TablaIU, AtajosIU, PaletaComandosIU, GestorColumnasIU,
+    VozIU, AsistenteIU, ComandosVozIU
   } = window.gravelop.iu;
 
   const ENTIDADES = ["clientes", "proyectos", "servicios", "facturas"];
@@ -25,6 +26,28 @@
       this.atajos = new AtajosIU();
       this.columnas = new GestorColumnasIU(this.almacen);
       this.paleta = new PaletaComandosIU((consulta) => this.comandos(consulta));
+
+      // Unidad 2 · interfaces naturales
+      this.voz = new VozIU("es-ES");
+      this.asistente = new AsistenteIU({
+        voz: this.voz,
+        toast: this.toast,
+        almacen: this.almacen,
+        endpoint: "ollama.php",
+        contexto: () => this.contextoParaIA()
+      });
+      this.manosLibres = new ComandosVozIU({
+        voz: this.voz,
+        toast: this.toast,
+        indicador: DOM.uno("#manosLibres"),
+        comandos: () => this.comandosVoz(),
+        alNoEntendido: (texto) => this.toast.mostrar({
+          tipo: "aviso",
+          titulo: "No conozco esa orden",
+          texto: `«${texto}». Di «ayuda» para ver las órdenes.`,
+          accion: { texto: "Preguntar al asistente", alPulsar: () => this.asistente.enviar(texto) }
+        })
+      });
 
       this.escenario = DOM.uno("#escenario");
       this.estado = {
@@ -586,6 +609,22 @@
         boton("Nuevo proyecto", "", () => this.abrirFormulario("proyectos", null)),
         boton("Editar un cliente", "secundario", () => this.abrirFormulario("clientes", this.estado.entidades.clientes.registros[0])));
 
+      // Unidad 2 · interfaces naturales
+      const soporte = (ok, texto) => `<span class="iu-insignia ${ok ? "ok" : "peligro"}">${texto}: ${ok ? "sí" : "no"}</span>`;
+      const tarjetaVoz = tarjeta("Voz", "Web Speech API. Detecta qué permite el navegador y desactiva lo que no puede usar.",
+        boton("Leer en voz alta", "secundario", () => this.voz.hablar("Hola. Soy el panel de Gravelop. Atraer, crear, crecer.")),
+        boton("Manos libres", "", () => this.manosLibres.alternar()),
+        boton("Órdenes de voz", "fantasma", () => this.mostrarComandosVoz()));
+      tarjetaVoz.insertAdjacentHTML("beforeend", `<div class="iu-barra" style="margin-top:10px">${soporte(this.voz.puedeEscuchar, "Reconocer voz")}${soporte(this.voz.puedeHablar, "Hablar")}</div>`);
+
+      const ejemplo = "### Respuesta de ejemplo\n- **Negrita**, *cursiva* y `código`\n- Una lista\n\n| Cliente | Presencia |\n|---|---|\n| Horno La Espiga | Sin web |";
+      const md = DOM.crear("div", { class: "iu-burbuja modelo" });
+      md.innerHTML = window.gravelop.iu.MarkdownIU.aHTML(ejemplo);
+      tarjeta("Markdown seguro", "Convierte la respuesta del modelo en HTML escapando todo antes: el modelo nunca puede inyectar código.").appendChild(md);
+
+      tarjeta("Asistente", "Ventana flotante que se arrastra, se minimiza y cambia de tamaño. Recuerda dónde la dejaste.",
+        boton("Abrir asistente", "", () => this.asistente.abrir()));
+
       // Validación en vivo de un formulario suelto
       const formulario = new FormularioIU([
         { nombre: "email", etiqueta: "Email", tipo: "email", requerido: true },
@@ -726,6 +765,109 @@
       return lista;
     }
 
+    /* ---------------- Unidad 2 · interfaces naturales ---------------- */
+
+    /**
+     * Lo que el asistente puede «ver»: la vista actual primero y después el
+     * resto de datos, en texto compacto (CSV con «;»), con los nombres de las
+     * claves ajenas ya resueltos para que el modelo no tenga que cruzar tablas.
+     */
+    contextoParaIA() {
+      const bloques = [];
+      const actual = this.vistaActual?.tipo === "entidad" ? this.estado.vista : null;
+      const orden = actual ? [actual, ...ENTIDADES.filter((e) => e !== actual)] : ENTIDADES;
+
+      orden.forEach((id) => {
+        const tabla = this.crearTabla(id);
+        const filas = id === actual ? tabla.filas() : tabla.registros;
+        const columnas = tabla.definicion.columnas;
+        const csv = [
+          columnas.map((c) => c.etiqueta).join(";"),
+          ...filas.map((r) => columnas.map((c) => tabla.textoCelda(c, r)).join(";"))
+        ].join("\n");
+        const nota = id === actual
+          ? ` (PANTALLA ACTUAL${this.estado.filtros[id] ? `, filtrada por «${this.estado.filtros[id]}»` : ""})`
+          : "";
+        bloques.push(`## ${tabla.definicion.titulo}${nota}\n${csv}`);
+      });
+
+      return `Hoy es ${new Date().toLocaleDateString("es-ES")}. Vista abierta: ${this.vistaActual?.texto}.\n\n${bloques.join("\n\n")}`;
+    }
+
+    /** Órdenes de voz: frases que reconoce el modo manos libres y qué hacen */
+    comandosVoz() {
+      const lista = [];
+      const singular = { clientes: ["nuevo cliente"], proyectos: ["nuevo proyecto"], servicios: ["nuevo servicio"], facturas: ["nueva factura"] };
+
+      this.estado.modulos.forEach((modulo) => modulo.vistas.forEach((vista) => {
+        const nombre = vista.texto.toLowerCase();
+        lista.push({
+          ayuda: `ir a ${nombre}`,
+          frases: ["ir a", "abre", "abrir", "ver", "muestra", "mostrar", "llévame a"].map((v) => `${v} ${nombre}`),
+          accion: () => this.irVista(modulo.id, vista.id)
+        });
+      }));
+
+      ENTIDADES.forEach((id) => lista.push({
+        ayuda: singular[id][0],
+        frases: [...singular[id], `crear ${singular[id][0].split(" ")[1]}`],
+        accion: () => this.abrirFormulario(id, null)
+      }));
+
+      lista.push(
+        { ayuda: "nuevo", frases: ["nuevo", "nueva", "crear", "añadir"], accion: () => this.nuevo() },
+        { ayuda: "filtrar …", frases: ["filtrar", "filtra", "buscar", "busca"], accion: (resto) => this.filtrarPorVoz(resto) },
+        { ayuda: "quitar filtro", frases: ["quitar filtro", "quita el filtro", "limpiar filtro", "borrar filtro"], accion: () => this.filtrarPorVoz("") },
+        { ayuda: "guardar", frases: ["guardar", "guarda", "crear registro"], accion: () => this.guardarPorVoz() },
+        { ayuda: "cerrar", frases: ["cerrar", "cierra", "cancelar", "cancela"], accion: () => this.cerrarTodo() },
+        { ayuda: "exportar", frases: ["exportar", "exporta", "descargar"], accion: () => this.vistaActual.tipo === "entidad" && this.exportarCSV(this.estado.vista) },
+        { ayuda: "tema oscuro / claro", frases: ["tema oscuro", "modo oscuro"], accion: () => this.cambiarPreferencia("tema", "oscuro") },
+        { ayuda: "", frases: ["tema claro", "modo claro"], accion: () => this.cambiarPreferencia("tema", "claro") },
+        { ayuda: "pregunta …", frases: ["pregunta", "asistente", "oye asistente"], accion: (resto) => resto ? this.asistente.enviar(resto) : this.asistente.abrir() },
+        { ayuda: "ayuda", frases: ["ayuda", "que puedo decir", "comandos"], accion: () => this.mostrarComandosVoz() }
+      );
+      return lista;
+    }
+
+    filtrarPorVoz(texto) {
+      if (this.vistaActual.tipo !== "entidad") {
+        this.toast.aviso("No hay tabla que filtrar", "Ve primero a clientes, proyectos, servicios o facturas.");
+        return;
+      }
+      this.estado.filtros[this.estado.vista] = texto;
+      const filtro = DOM.uno("#filtro");
+      if (filtro) filtro.value = texto;
+      this.pintarTabla(this.estado.vista);
+    }
+
+    guardarPorVoz() {
+      if (!this.drawer.abierto) {
+        this.toast.aviso("No hay nada que guardar", "Abre primero un formulario, por ejemplo diciendo «nuevo cliente».");
+        return;
+      }
+      DOM.todos(".iu-drawer-pie .iu-btn", document).at(-1).click();
+    }
+
+    cerrarTodo() {
+      if (this.modal.abierto) this.modal.cerrar(null);
+      else if (this.drawer.abierto) this.drawer.solicitarCierre();
+      else if (this.paleta.abierta) this.paleta.cerrar();
+      else if (this.asistente.abierto) this.asistente.cerrar();
+    }
+
+    mostrarComandosVoz() {
+      const lista = DOM.crear("dl", { class: "iu-lista-atajos" });
+      this.comandosVoz().filter((c) => c.ayuda).forEach((c) => {
+        const fila = DOM.crear("div");
+        fila.innerHTML = `<dt>«${Utilidades.escapar(c.ayuda)}»</dt><dd class="iu-tenue">${Utilidades.escapar(c.frases.slice(1, 3).join(" · "))}</dd>`;
+        lista.appendChild(fila);
+      });
+      const ayuda = DOM.crear("div");
+      ayuda.innerHTML = `<p>Activa el micrófono <strong>🎙</strong> (o pulsa <kbd>M</kbd>) y di una orden. Di «parar» para terminar. Si dices algo que no es una orden, puedes mandárselo al asistente.</p>`;
+      ayuda.appendChild(lista);
+      this.modal.abrir({ titulo: "Órdenes de voz", contenido: ayuda, acciones: [{ texto: "Entendido", valor: true }] });
+    }
+
     /* ---------------- Paleta de comandos ---------------- */
     comandos(consulta) {
       const lista = [];
@@ -756,6 +898,9 @@
 
       lista.push(
         { grupo: "Acciones", texto: "Cambiar tema claro / oscuro", claves: "modo noche dia", icono: "Aa", atajo: "t", accion: () => this.cambiarPreferencia("tema", this.preferencias.valores.tema === "oscuro" ? "claro" : "oscuro") },
+        { grupo: "Acciones", texto: "Preguntar al asistente", claves: "ia chat ayuda ollama", icono: "✦", atajo: "a", accion: () => this.asistente.abrir() },
+        { grupo: "Acciones", texto: "Activar o desactivar manos libres", claves: "voz microfono hablar", icono: "🎙", atajo: "m", accion: () => this.manosLibres.alternar() },
+        { grupo: "Acciones", texto: "Ver órdenes de voz", claves: "voz comandos ayuda", icono: "🎙", accion: () => this.mostrarComandosVoz() },
         { grupo: "Acciones", texto: "Ver atajos de teclado", claves: "ayuda teclas", icono: "⌨", atajo: "?", accion: () => this.mostrarAtajos() },
         { grupo: "Acciones", texto: "Contraer o expandir los menús", claves: "columnas", icono: "«", atajo: "[", accion: () => this.alternarColumnas() },
         { grupo: "Acciones", texto: "Restablecer datos de demostración", claves: "reiniciar demo", icono: "↺", accion: () => this.restablecerDatos() },
@@ -803,6 +948,8 @@
       this.atajos.registrar("t", "Cambiar tema claro / oscuro", () => this.cambiarPreferencia("tema", this.preferencias.valores.tema === "oscuro" ? "claro" : "oscuro"));
       this.atajos.registrar("[", "Contraer o expandir los menús", () => this.alternarColumnas());
       this.atajos.registrar("?", "Ver los atajos de teclado", () => this.mostrarAtajos());
+      this.atajos.registrar("a", "Abrir o cerrar el asistente", () => this.asistente.alternar());
+      this.atajos.registrar("m", "Activar o desactivar manos libres", () => this.manosLibres.alternar());
       this.estado.modulos.forEach((modulo, indice) => {
         this.atajos.registrar(`alt+${indice + 1}`, `Ir a ${modulo.texto}`, () => this.irModulo(modulo.id), { global: true, visible: indice === 0 });
       });
@@ -834,6 +981,11 @@
     activarEventos() {
       DOM.uno("#lanzador").addEventListener("click", () => this.paleta.abrir());
       DOM.uno("#nuevo").addEventListener("click", () => this.nuevo());
+      DOM.uno("#abrirAsistente").addEventListener("click", () => this.asistente.alternar());
+      DOM.uno("#manosLibres").addEventListener("click", () => this.manosLibres.alternar());
+      if (!this.voz.puedeEscuchar) {
+        DOM.uno("#manosLibres").title = "Manos libres no disponible: este navegador no reconoce la voz (usa Chrome)";
+      }
       DOM.uno("#tema").addEventListener("click", () => this.cambiarPreferencia("tema", this.preferencias.valores.tema === "oscuro" ? "claro" : "oscuro"));
       DOM.uno("#salir").addEventListener("click", (evento) => {
         evento.preventDefault();
